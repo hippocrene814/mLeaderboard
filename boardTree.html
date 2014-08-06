@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <script type="text/javascript" src="d3/d3.js"></script>
+    <script type="text/javascript" src="d3/d3.layout.js"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/2.2.0/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+      .node circle {
+        cursor: pointer;
+        fill: #fff;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+      }
+
+      .node text {
+        font-size: 11px;
+      }
+
+      path.link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 1.5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container-fluid">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">mLeaderboard</a>
+            <div class="nav-collapse collapse">
+              <p class="navbar-text pull-right">
+                Logged in as <a href="#" class="navbar-link">Username</a>
+              </p>
+              <ul class="nav">
+                <li><a href="./boardHome.html">Home</a></li>
+                <li><a href="./boardTable.html">Table</a></li>
+                <li><a href="./boardChart.html">Chart</a></li>
+                <li class="active"><a href="./boardTree.html">Tree</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-default" onclick="loadJSONDoc()">show</button>
+      <div id="body">
+      </div>
+      <div>
+        <footer>
+          <p>&copy; Twitter 2014</p>
+        </footer>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var m = [20, 120, 20, 120],
+          w = 1280 - m[1] - m[3],
+          h = 500 - m[0] - m[2],
+          i = 0;
+      var root = new Object();
+
+      var tree = d3.layout.tree()
+          .size([h, w]);
+
+      var diagonal = d3.svg.diagonal()
+          .projection(function(d) { return [d.y, d.x]; });
+
+      var vis = d3.select("#body").append("svg:svg")
+          .attr("width", w + m[1] + m[3])
+          .attr("height", h + m[0] + m[2])
+        .append("svg:g")
+          .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+
+      function loadJSONDoc() {
+        var xmlhttp=new XMLHttpRequest();
+        xmlhttp.onload=function() {
+          var txt = xmlhttp.responseText;
+          var obj = JSON.parse(txt);
+          populateResults(obj);
+        }
+          // var url = build + "artifact/scripts/mobile-test-reporting/artifacts/testsuites.json";
+        var url = "testsuites.json";
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+      }
+
+      function populateResults(testResults) {
+        //create an array to save each contributor with his/her
+        //testCase and testSuite
+        //arr[i].contr, arr[i].testCases, arr[i].testSuites
+        var arr = new Array();
+        for(var testSuite in testResults) {
+          var testSuiteData = testResults[testSuite];
+          for(var testCase in testSuiteData["test_cases"]) {
+            testCaseFull = testSuite + '.' + testCase; // the whole name of test case
+            var testCaseData = testSuiteData["test_cases"][testCase];
+            for(var i=0; i<testCaseData["contributors"].length; i++) {
+              var testCaseContr = testCaseData["contributors"][i];
+              var flag = 0;
+              for(var j=0; j<arr.length; j++) {
+                if(arr[j].contr == testCaseContr) {
+                  flag = 1;
+                  arr[j].testCases.push(testCaseFull);
+                  if((arr[j].testSuites)[arr[j].testSuites.length-1] != testSuite) {
+                    arr[j].testSuites.push(testSuite);
+                  }
+                  break;
+                }
+              }
+              if(flag == 0) {
+                var obj = new Object();
+                obj.contr = testCaseContr;
+                var newTestCases = [testCaseFull];
+                obj.testCases = newTestCases;
+                var newTestSuites = [testSuite];
+                obj.testSuites = newTestSuites;
+                arr.push(obj);
+              }
+            } // contributor, i
+          } // testCase
+        } // testSuite
+
+        // count the number of each contributor
+        for(var j=0; j<arr.length; j++) {
+          arr[j].testCaseCount = (arr[j].testCases).length;
+          arr[j].testSuiteCount = (arr[j].testSuites).length;
+        }
+
+        for(var j=0; j<arr.length; j++) {
+          var arrSuite = new Array();
+          for(var i=0; i<arr[j].testSuiteCount; i++) {
+            var obj = new Object();
+            var tmpSuite = (arr[j].testSuites)[i];
+            obj.suite = tmpSuite;
+            var arrayCase = new Array();
+            for(var k=0; k<arr[j].testCaseCount; k++) {
+              var tmpCase = (arr[j].testCases)[k];
+              if(tmpCase.indexOf(tmpSuite) > -1) {
+                arrayCase.push(tmpCase);
+              }
+            }
+            obj.case = arrayCase;
+            arrSuite.push(obj);
+          }
+          arr[j].levelCase = arrSuite;
+        }
+
+        var contr = "yhua@twitter.com";
+        //create new data structure
+        root.name = contr;
+        var testSuite = new Array();
+        for(var j=0; j<arr.length; j++) {
+          if(arr[j].contr == contr) {
+            for(var i=0; i<arr[j].testSuiteCount; i++) {
+              var childRoot = new Object();
+              var lenSuite = ((arr[j].levelCase)[i].suite).length - 1;
+              childRoot.name = ((arr[j].levelCase)[i].suite).substr(29, lenSuite);
+              var testCase = new Array();
+              for(var k=0; k<((arr[j].levelCase)[i].case).length; k++) {
+                var grandChildRoot = new Object();
+                var lenCase = (((arr[j].levelCase)[i].case)[k]).length - 1;
+                grandChildRoot.name = (((arr[j].levelCase)[i].case)[k]).substr(lenSuite+2,lenCase);
+                testCase.push(grandChildRoot);
+              }
+              childRoot.children = testCase;
+              testSuite.push(childRoot);
+            }
+          }
+        }
+        root.children = testSuite;
+        var aaa = JSON.stringify(root, null, '\t')
+        root.x0 = h / 2;
+        root.y0 = 0;
+
+        function toggleAll(d) {
+          if (d.children) {
+            d.children.forEach(toggleAll);
+            toggle(d);
+          }
+        }
+        // Initialize the display to show a few nodes.
+        root.children.forEach(toggleAll);
+        toggle(root.children[0]);
+
+        update(root);
+      }
+
+      function update(source) {
+        var duration = d3.event && d3.event.altKey ? 5000 : 500;
+
+        // Compute the new tree layout.
+        var nodes = tree.nodes(root).reverse();
+
+        // Normalize for fixed-depth.
+        nodes.forEach(function(d) { d.y = d.depth * 180; });
+
+        // Update the nodes…
+        var node = vis.selectAll("g.node")
+            .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+        // Enter any new nodes at the parent's previous position.
+        var nodeEnter = node.enter().append("svg:g")
+            .attr("class", "node")
+            .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+            .on("click", function(d) { toggle(d); update(d); });
+
+        nodeEnter.append("svg:circle")
+            .attr("r", 1e-6)
+            .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
+        nodeEnter.append("svg:text")
+            .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+            .attr("dy", ".35em")
+            .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+            .text(function(d) { return d.name; })
+            .style("fill-opacity", 1e-6);
+
+        // Transition nodes to their new position.
+        var nodeUpdate = node.transition()
+            .duration(duration)
+            .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+        nodeUpdate.select("circle")
+            .attr("r", 4.5)
+            .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
+        nodeUpdate.select("text")
+            .style("fill-opacity", 1);
+
+        // Transition exiting nodes to the parent's new position.
+        var nodeExit = node.exit().transition()
+            .duration(duration)
+            .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+            .remove();
+
+        nodeExit.select("circle")
+            .attr("r", 1e-6);
+
+        nodeExit.select("text")
+            .style("fill-opacity", 1e-6);
+
+        // Update the links…
+        var link = vis.selectAll("path.link")
+            .data(tree.links(nodes), function(d) { return d.target.id; });
+
+        // Enter any new links at the parent's previous position.
+        link.enter().insert("svg:path", "g")
+            .attr("class", "link")
+            .attr("d", function(d) {
+              var o = {x: source.x0, y: source.y0};
+              return diagonal({source: o, target: o});
+            })
+          .transition()
+            .duration(duration)
+            .attr("d", diagonal);
+
+        // Transition links to their new position.
+        link.transition()
+            .duration(duration)
+            .attr("d", diagonal);
+
+        // Transition exiting nodes to the parent's new position.
+        link.exit().transition()
+            .duration(duration)
+            .attr("d", function(d) {
+              var o = {x: source.x, y: source.y};
+              return diagonal({source: o, target: o});
+            })
+            .remove();
+
+        // Stash the old positions for transition.
+        nodes.forEach(function(d) {
+          d.x0 = d.x;
+          d.y0 = d.y;
+        });
+      }
+
+      // Toggle children.
+      function toggle(d) {
+        if (d.children) {
+          d._children = d.children;
+          d.children = null;
+        } else {
+          d.children = d._children;
+          d._children = null;
+        }
+      }
+
+      addEventListener("load", function () {
+        loadJSONDoc();
+      });
+    </script>
+  </body>
+</html>
