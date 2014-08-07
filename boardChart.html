@@ -38,7 +38,7 @@
         populateResults(obj,indx);
       }
         // var url = build + "artifact/scripts/mobile-test-reporting/artifacts/testsuites.json";
-      var url = "testsuites.json";
+      var url = "json/android/testsuites.json";
       xmlhttp.open("GET", url, true);
       xmlhttp.send();
     }
@@ -120,7 +120,7 @@
       }
       else {
         arr.sort(compare("testCaseCount"));
-        for(var j=indx; j<(20+indx); j++) {
+        for(var j=indx; j<(20+indx) && j<arr.length; j++) {
           lineChartData.labels.push(arr[j].contr);
           (lineChartData.datasets)[0].data.push(arr[j].testCaseCount);
           (lineChartData.datasets)[1].data.push(arr[j].testSuiteCount);
@@ -165,27 +165,35 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">mLeaderboard</a>
+          <a class="brand" href="./boardChart.html">mLeaderboard</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
               Logged in as <a href="#" class="navbar-link">Username</a>
             </p>
             <ul class="nav">
-              <li><a href="./boardHome.html">Home</a></li>
-              <li><a href="./boardTable.html">Table</a></li>
               <li class="active"><a href="./boardChart.html">Chart</a></li>
+              <li><a href="./boardTable.html">Table</a></li>
               <li><a href="./boardTree.html">Tree</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
-    <button type="button" class="btn btn-default" onclick="loadJSONDoc(100)">random</button>
-    <button type="button" class="btn btn-default" onclick="loadJSONDoc(0)">1~20</button>
-    <button type="button" class="btn btn-default" onclick="loadJSONDoc(20)">21~40</button>
-    <button type="button" class="btn btn-default" onclick="loadJSONDoc(40)">41~60</button>
-    <div id="canvas_holder" style="width:80%">
-        <!--<canvas id="canvas" height="1000" width="2000"></canvas>-->
-    </div>
+    <div class="container-fluid">
+      <h2>Please select contributor rank range</h2>
+      <select multiple>
+        <option onclick="loadJSONDoc(0)">1~20</option>
+        <option onclick="loadJSONDoc(20)">21~40</option>
+        <option onclick="loadJSONDoc(40)">41~60</option>
+        <option onclick="loadJSONDoc(60)">61~max</option>
+        <option onclick="loadJSONDoc(100)">random</option>
+      </select>
+      <div id="canvas_holder" style="width:80%">
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; Twitter 2014</p>
+      </footer>
+    </div><!--/.fluid-container-->
   </body>
 </html>

@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>mLeaderboard_table</title>
+    <title>testLeaderboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -36,7 +36,7 @@
     // pass the para "build" to loadJSONDoc(build)
     function getLatestBuild() {
         // Get latest build implementation here
-        var jobInfoUrl = "json/android/restapi.json";
+        var jobInfoUrl = "restapi.json";
         var xhr;
         if (window.XMLHttpRequest) {
           xhr = new XMLHttpRequest();
@@ -74,8 +74,7 @@
           }
         }
         // var url = build + "artifact/scripts/mobile-test-reporting/artifacts/testsuites.json";
-        //var url = "https://mobile-ci.twitter.biz/view/Android/job/twitter-android-ui-tests/2081/artifact/scripts/mobile-test-reporting/artifacts/testsuites.json";
-        var url = "json/ios/testsuites.json";
+        var url = "testsuites.json";
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
       }
@@ -123,13 +122,13 @@
         }
 
         // construct a level data structure
-        // arr = [ { 
+        // arr = [{ 
         //   "contr" : "yhua@twitter.com", 
-        //   "levelCase": {[{suite:"x", case:["x1", "x2", ...]}, {suite:"y", case:["y1", "y2"]}, ...]}
+        //   "levelCase": [{"suite":"x", "case":["x1", "x2", ...]}, {"suite":"y", "case":["y1", "y2"]}, ...]
         //   },
         //   {
         //   "contr" : "yyyy@twitter.com", 
-        //   "levelCase": {[{suite:"x", case:["x1", "x3", ...]}, {suite:"y", case:["y2", "y4"]}, ...]}
+        //   "levelCase": [{"suite":"x", "case":["x1", "x3", ...]}, {"suite":"y", "case":["y2", "y4"]}, ...]
         //   },
         //   ...
         // ]
@@ -170,7 +169,10 @@
         }
         arr.sort(compare("testCaseCount"));
 
-        var str = "<table class='table table-hover'><tr><th>rank</th><th>contributor</th><th>test case#</th><th>test suite#</th><th>more details</th></tr>";
+        var a = JSON.stringify(arr, null, '\t');
+        // System.out.print(arr[]);
+
+        var str = "<table class='table table-hover'><tr><th>rank</th><th>contributor</th><th>test cases #</th><th>test suites #</th></tr>";
         for(var j=0; j<arr.length; j++) {
           str = str + "<tr>";
           str = str + ("<td>" + j + "</td>");
@@ -182,57 +184,35 @@
           str = str + ("<td>" + arr[j].testCaseCount + "</td>");
           // show the test suite count
           str = str + ("<td>" + arr[j].testSuiteCount + "</td>");
-          str = str + ("<td><a href='boardTree.html#"+ arr[j].contr +"'>" + "##" + "</a></td>");
           str = str + ("</tr>");
         }
         str = str + ("</table>");
         document.getElementById("ajaxRefresh").innerHTML = str;
       }
-
-      addEventListener("load", function () {
-        loadJSONDoc();
-      });
       </script>
 
   </head>
 
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="./boardChart.html">mLeaderboard</a>
-          <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a>
-            </p>
-            <ul class="nav">
-              <li><a href="./boardChart.html">Chart</a></li>
-              <li class="active"><a href="./boardTable.html">Table</a></li>
-              <li><a href="./boardTree.html">Tree</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
+
+    <div class="span9">
+      <button type="button" class="btn btn-default" onclick="loadJSONDoc()">show</button>
+      <button type="button" class="btn btn-default" onclick="getLatestBuild()">test</button>
+      <div id="ajaxRefresh" class="bs-example"></div>
     </div>
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span9">
-          <button type="button" class="btn btn-default" onclick="loadJSONDoc()">show</button>
-          <button type="button" class="btn btn-default" onclick="getLatestBuild()">test</button>
-          <div id="ajaxRefresh" class="bs-example"></div>
-        </div>
-      </div><!--/row-->
-      <hr>
-      <footer>
-        <p>&copy; Twitter 2014</p>
-      </footer>
-    </div><!--/.fluid-container-->
-
+    <div id="expanderContent" style="display:none">
+    <table class='table table-hover table-condensed table-responsive' style='margin: 0px'>
+    <thead>
+    <tr class="info">
+        <td> </td>
+        <td> test case </td>
+        <td> created </td>
+        <td> modified </td>
+        <td> contributor </td>
+    </tr>
+    </thead>
+    </table>
+    </div>
   </body>
 </html>

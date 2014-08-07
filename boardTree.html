@@ -3,6 +3,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>mLeaderboard_tree</title>
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <script type="text/javascript" src="d3/d3.js"></script>
     <script type="text/javascript" src="d3/d3.layout.js"></script>
@@ -53,25 +54,29 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="#">mLeaderboard</a>
+            <a class="brand" href="./boardChart.html">mLeaderboard</a>
             <div class="nav-collapse collapse">
               <p class="navbar-text pull-right">
                 Logged in as <a href="#" class="navbar-link">Username</a>
               </p>
               <ul class="nav">
-                <li><a href="./boardHome.html">Home</a></li>
-                <li><a href="./boardTable.html">Table</a></li>
                 <li><a href="./boardChart.html">Chart</a></li>
+                <li><a href="./boardTable.html">Table</a></li>
                 <li class="active"><a href="./boardTree.html">Tree</a></li>
               </ul>
             </div><!--/.nav-collapse -->
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-default" onclick="loadJSONDoc()">show</button>
-      <div id="body">
+      Contributor's Email: <input type = "text" id = "inputid">
+      <input type="button" class="btn btn-default" onclick="loadJSONDoc()" value="show">
+      <div id="body" style="float:left;width:70%;">
       </div>
-      <div>
+      <div id="body-right" style="float:right;width:30%;">
+      </div>
+      <hr>
+      <div style="clear:both;"></div>
+        <hr>
         <footer>
           <p>&copy; Twitter 2014</p>
         </footer>
@@ -97,19 +102,30 @@
           .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
       function loadJSONDoc() {
+        var putContr = "";
+        var contr = "";
+        var input = document.getElementById("inputid");
+        if(input) {
+          contr = input.value;
+        }
+        if(contr != "") {
+          window.location.href = window.location.pathname + "#" + contr;
+        }
+        var putContr = window.location.hash.substring(1);
+
         var xmlhttp=new XMLHttpRequest();
         xmlhttp.onload=function() {
           var txt = xmlhttp.responseText;
           var obj = JSON.parse(txt);
-          populateResults(obj);
+          populateResults(obj, putContr);
         }
-          // var url = build + "artifact/scripts/mobile-test-reporting/artifacts/testsuites.json";
-        var url = "testsuites.json";
+        // var url = build + "artifact/scripts/mobile-test-reporting/artifacts/testsuites.json";
+        var url = "json/ios/testsuites.json";
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
       }
 
-      function populateResults(testResults) {
+      function populateResults(testResults, contr) {
         //create an array to save each contributor with his/her
         //testCase and testSuite
         //arr[i].contr, arr[i].testCases, arr[i].testSuites
@@ -170,44 +186,50 @@
           arr[j].levelCase = arrSuite;
         }
 
-        var contr = "yhua@twitter.com";
-        //create new data structure
-        root.name = contr;
-        var testSuite = new Array();
-        for(var j=0; j<arr.length; j++) {
-          if(arr[j].contr == contr) {
-            for(var i=0; i<arr[j].testSuiteCount; i++) {
-              var childRoot = new Object();
-              var lenSuite = ((arr[j].levelCase)[i].suite).length - 1;
-              childRoot.name = ((arr[j].levelCase)[i].suite).substr(29, lenSuite);
-              var testCase = new Array();
-              for(var k=0; k<((arr[j].levelCase)[i].case).length; k++) {
-                var grandChildRoot = new Object();
-                var lenCase = (((arr[j].levelCase)[i].case)[k]).length - 1;
-                grandChildRoot.name = (((arr[j].levelCase)[i].case)[k]).substr(lenSuite+2,lenCase);
-                testCase.push(grandChildRoot);
+        // create new data structure
+        if(contr) {
+          var indx = 0;
+          window.location.href = window.location.pathname + "#" + contr;
+          root.name = contr;
+          var testSuite = new Array();
+          for(var j=0; j<arr.length; j++) {
+            if(arr[j].contr == contr) {
+              indx = j;
+              for(var i=0; i<arr[j].testSuiteCount; i++) {
+                var childRoot = new Object();
+                var lenSuite = ((arr[j].levelCase)[i].suite).length - 1;
+                childRoot.name = ((arr[j].levelCase)[i].suite).substr(29, lenSuite);
+                var testCase = new Array();
+                for(var k=0; k<((arr[j].levelCase)[i].case).length; k++) {
+                  var grandChildRoot = new Object();
+                  var lenCase = (((arr[j].levelCase)[i].case)[k]).length - 1;
+                  grandChildRoot.name = (((arr[j].levelCase)[i].case)[k]).substr(lenSuite+2,lenCase);
+                  testCase.push(grandChildRoot);
+                }
+                childRoot.children = testCase;
+                testSuite.push(childRoot);
               }
-              childRoot.children = testCase;
-              testSuite.push(childRoot);
             }
           }
-        }
-        root.children = testSuite;
-        var aaa = JSON.stringify(root, null, '\t')
-        root.x0 = h / 2;
-        root.y0 = 0;
+          root.children = testSuite;
+          var aaa = JSON.stringify(root, null, '\t')
+          root.x0 = h / 2;
+          root.y0 = 0;
 
-        function toggleAll(d) {
-          if (d.children) {
-            d.children.forEach(toggleAll);
-            toggle(d);
+          function toggleAll(d) {
+            if (d.children) {
+              d.children.forEach(toggleAll);
+              toggle(d);
+            }
           }
-        }
-        // Initialize the display to show a few nodes.
-        root.children.forEach(toggleAll);
-        toggle(root.children[0]);
+          // Initialize the display to show a few nodes.
+          root.children.forEach(toggleAll);
+          toggle(root.children[0]);
 
-        update(root);
+          update(root);
+
+          showInfo(arr, indx);
+        }
       }
 
       function update(source) {
@@ -309,6 +331,14 @@
           d.children = d._children;
           d._children = null;
         }
+      }
+
+      function showInfo(arr, indx) {
+        var str = "<table class='table table-bordered'>";
+        str = str + ("<tr><td>contributor</td><td>" + arr[indx].contr + "</td><tr>");
+        str = str + ("<tr><td>test suite#</td><td>" + arr[indx].testSuiteCount + "</td><tr>");
+        str = str + ("<tr><td>test case#</td><td>" + arr[indx].testCaseCount + "</td><tr></table>");
+        document.getElementById("body-right").innerHTML = str;
       }
 
       addEventListener("load", function () {
