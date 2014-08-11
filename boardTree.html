@@ -7,6 +7,7 @@
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <script type="text/javascript" src="d3/d3.js"></script>
     <script type="text/javascript" src="d3/d3.layout.js"></script>
+    <script src="./js/operData.js"></script>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/2.2.0/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
@@ -16,7 +17,6 @@
       .sidebar-nav {
         padding: 9px 0;
       }
-
       @media (max-width: 980px) {
         /* Enable use of floated navbar text */
         .navbar-text.pull-right {
@@ -31,58 +31,60 @@
         stroke: steelblue;
         stroke-width: 1.5px;
       }
-
       .node text {
         font-size: 11px;
       }
-
       path.link {
         fill: none;
         stroke: #ccc;
         stroke-width: 1.5px;
       }
     </style>
+
   </head>
 
   <body>
-    <div class="container-fluid">
-      <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-          <div class="container-fluid">
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="brand" href="./boardChart.html">mLeaderboard</a>
-            <div class="nav-collapse collapse">
-              <p class="navbar-text pull-right">
-                Logged in as <a href="#" class="navbar-link">Username</a>
-              </p>
-              <ul class="nav">
-                <li><a href="./boardChart.html">Chart</a></li>
-                <li><a href="./boardTable.html">Table</a></li>
-                <li class="active"><a href="./boardTree.html">Tree</a></li>
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="./boardChart.html">mLeaderboard</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+              Logged in as <a href="#" class="navbar-link">Username</a>
+            </p>
+            <ul class="nav">
+              <li><a href="./boardChart.html">Chart</a></li>
+              <li><a href="./boardTable.html">Table</a></li>
+              <li class="active"><a href="./boardTree.html">Tree</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
         </div>
       </div>
-      Contributor's Email: <input type = "text" id = "inputid">
-      <input type="button" class="btn btn-default" onclick="loadJSONDoc()" value="show">
+    </div>
+
+    <div class="container-fluid">
+      Contributor's Email: <input type = "text" id = "inputid" onkeydown="if (event.keyCode == 13) document.getElementById('btnShow').click()">
+      <input type="button" class="btn btn-default" onclick="loadJSONDoc()" id="btnShow" value="show">
       <div id="body" style="float:left;width:70%;">
       </div>
       <div id="body-right" style="float:right;width:30%;">
       </div>
       <hr>
-      <div style="clear:both;"></div>
+      <div style="clear:both;">
         <hr>
         <footer>
           <p>&copy; Twitter 2014</p>
         </footer>
       </div>
     </div>
+
     <script type="text/javascript">
+    // this script should be put at the end to wait input text 
       var m = [20, 120, 20, 120],
           w = 1280 - m[1] - m[3],
           h = 500 - m[0] - m[2],
@@ -117,117 +119,29 @@
         xmlhttp.onload=function() {
           var txt = xmlhttp.responseText;
           var obj = JSON.parse(txt);
-          populateResults(obj, putContr);
+          populate(obj, putContr);
         }
         // var url = build + "artifact/scripts/mobile-test-reporting/artifacts/testsuites.json";
-        var url = "json/ios/testsuites.json";
+        var url = "json/android/testsuites.json";
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
       }
 
-      function populateResults(testResults, contr) {
+      function populate(testResults, contr) {
         //create an array to save each contributor with his/her
         //testCase and testSuite
         //arr[i].contr, arr[i].testCases, arr[i].testSuites
         var arr = new Array();
-        for(var testSuite in testResults) {
-          var testSuiteData = testResults[testSuite];
-          for(var testCase in testSuiteData["test_cases"]) {
-            testCaseFull = testSuite + '.' + testCase; // the whole name of test case
-            var testCaseData = testSuiteData["test_cases"][testCase];
-            for(var i=0; i<testCaseData["contributors"].length; i++) {
-              var testCaseContr = testCaseData["contributors"][i];
-              var flag = 0;
-              for(var j=0; j<arr.length; j++) {
-                if(arr[j].contr == testCaseContr) {
-                  flag = 1;
-                  arr[j].testCases.push(testCaseFull);
-                  if((arr[j].testSuites)[arr[j].testSuites.length-1] != testSuite) {
-                    arr[j].testSuites.push(testSuite);
-                  }
-                  break;
-                }
-              }
-              if(flag == 0) {
-                var obj = new Object();
-                obj.contr = testCaseContr;
-                var newTestCases = [testCaseFull];
-                obj.testCases = newTestCases;
-                var newTestSuites = [testSuite];
-                obj.testSuites = newTestSuites;
-                arr.push(obj);
-              }
-            } // contributor, i
-          } // testCase
-        } // testSuite
-
-        // count the number of each contributor
-        for(var j=0; j<arr.length; j++) {
-          arr[j].testCaseCount = (arr[j].testCases).length;
-          arr[j].testSuiteCount = (arr[j].testSuites).length;
-        }
-
-        for(var j=0; j<arr.length; j++) {
-          var arrSuite = new Array();
-          for(var i=0; i<arr[j].testSuiteCount; i++) {
-            var obj = new Object();
-            var tmpSuite = (arr[j].testSuites)[i];
-            obj.suite = tmpSuite;
-            var arrayCase = new Array();
-            for(var k=0; k<arr[j].testCaseCount; k++) {
-              var tmpCase = (arr[j].testCases)[k];
-              if(tmpCase.indexOf(tmpSuite) > -1) {
-                arrayCase.push(tmpCase);
-              }
-            }
-            obj.case = arrayCase;
-            arrSuite.push(obj);
-          }
-          arr[j].levelCase = arrSuite;
-        }
+        arr = populateResults(testResults);
 
         // create new data structure
         if(contr) {
-          var indx = 0;
-          window.location.href = window.location.pathname + "#" + contr;
-          root.name = contr;
-          var testSuite = new Array();
-          for(var j=0; j<arr.length; j++) {
-            if(arr[j].contr == contr) {
-              indx = j;
-              for(var i=0; i<arr[j].testSuiteCount; i++) {
-                var childRoot = new Object();
-                var lenSuite = ((arr[j].levelCase)[i].suite).length - 1;
-                childRoot.name = ((arr[j].levelCase)[i].suite).substr(29, lenSuite);
-                var testCase = new Array();
-                for(var k=0; k<((arr[j].levelCase)[i].case).length; k++) {
-                  var grandChildRoot = new Object();
-                  var lenCase = (((arr[j].levelCase)[i].case)[k]).length - 1;
-                  grandChildRoot.name = (((arr[j].levelCase)[i].case)[k]).substr(lenSuite+2,lenCase);
-                  testCase.push(grandChildRoot);
-                }
-                childRoot.children = testCase;
-                testSuite.push(childRoot);
-              }
-            }
-          }
-          root.children = testSuite;
-          var aaa = JSON.stringify(root, null, '\t')
-          root.x0 = h / 2;
-          root.y0 = 0;
+          var indx = createRoot(arr, contr, root);
 
-          function toggleAll(d) {
-            if (d.children) {
-              d.children.forEach(toggleAll);
-              toggle(d);
-            }
-          }
-          // Initialize the display to show a few nodes.
-          root.children.forEach(toggleAll);
-          toggle(root.children[0]);
-
+          // show the tree on the left
           update(root);
 
+          // show a table on the right
           showInfo(arr, indx);
         }
       }
@@ -322,17 +236,6 @@
         });
       }
 
-      // Toggle children.
-      function toggle(d) {
-        if (d.children) {
-          d._children = d.children;
-          d.children = null;
-        } else {
-          d.children = d._children;
-          d._children = null;
-        }
-      }
-
       function showInfo(arr, indx) {
         var str = "<table class='table table-bordered'>";
         str = str + ("<tr><td>contributor</td><td>" + arr[indx].contr + "</td><tr>");
@@ -341,6 +244,7 @@
         document.getElementById("body-right").innerHTML = str;
       }
 
+      // show tree on load
       addEventListener("load", function () {
         loadJSONDoc();
       });

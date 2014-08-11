@@ -28,128 +28,36 @@
       }
     </style>
     <script src="./js/Chart.js"></script>
+    <script src="./js/operData.js"></script>
     <script type="text/javascript">
-    // function loadJSONDoc(build) {
     function loadJSONDoc(indx) {
       var xmlhttp=new XMLHttpRequest();
       xmlhttp.onload=function() {
         var txt = xmlhttp.responseText;
         var obj = JSON.parse(txt);
-        populateResults(obj,indx);
+        populate(obj, indx);
       }
-        // var url = build + "artifact/scripts/mobile-test-reporting/artifacts/testsuites.json";
       var url = "json/android/testsuites.json";
       xmlhttp.open("GET", url, true);
       xmlhttp.send();
     }
 
-    function populateResults(testResults,indx) {
+    function populate(testResults,indx) {
       //create an array to save each contributor with his/her
       //testCase and testSuite
       //arr[i].contr, arr[i].testCases, arr[i].testSuites
       var arr = new Array();
-      for(var testSuite in testResults) {
-        var testSuiteData = testResults[testSuite];
-        for(var testCase in testSuiteData["test_cases"]) {
-          testCaseFull = testSuite + '.' + testCase; // the whole name of test case
-          var testCaseData = testSuiteData["test_cases"][testCase];
-          for(var i=0; i<testCaseData["contributors"].length; i++) {
-            var testCaseContr = testCaseData["contributors"][i];
-            var flag = 0;
-            for(var j=0; j<arr.length; j++) {
-              if(arr[j].contr == testCaseContr) {
-                flag = 1;
-                arr[j].testCases.push(testCaseFull);
-                if((arr[j].testSuites)[arr[j].testSuites.length-1] != testSuite) {
-                  arr[j].testSuites.push(testSuite);
-                }
-                break;
-              }
-            }
-            if(flag == 0) {
-              var obj = new Object();
-              obj.contr = testCaseContr;
-              var newTestCases = [testCaseFull];
-              obj.testCases = newTestCases;
-              var newTestSuites = [testSuite];
-              obj.testSuites = newTestSuites;
-              arr.push(obj);
-            }
-          } // contributor, i
-        } // testCase
-      } // testSuite
-
-      // count the number of each contributor
-      for(var j=0; j<arr.length; j++) {
-        arr[j].testCaseCount = (arr[j].testCases).length;
-        arr[j].testSuiteCount = (arr[j].testSuites).length;
-      }
-
-      var lineChartData = {
-        labels : [],
-        datasets : [
-          {
-            label: "My First dataset",
-            fillColor : "rgba(220,220,220,0.2)",
-            strokeColor : "rgba(220,220,220,1)",
-            pointColor : "rgba(220,220,220,1)",
-            pointStrokeColor : "#fff",
-            pointHighlightFill : "#fff",
-            pointHighlightStroke : "rgba(220,220,220,1)",
-            data : []
-          },
-          {
-            label: "My Second dataset",
-            fillColor : "rgba(151,187,205,0.2)",
-            strokeColor : "rgba(151,187,205,1)",
-            pointColor : "rgba(151,187,205,1)",
-            pointStrokeColor : "#fff",
-            pointHighlightFill : "#fff",
-            pointHighlightStroke : "rgba(151,187,205,1)",
-            data : []
-          }
-        ]
-      }
-
-      if(indx == 100) {
-        for(var j=0; j<20; j++) {
-          lineChartData.labels.push(arr[j].contr);
-          (lineChartData.datasets)[0].data.push(arr[j].testCaseCount);
-          (lineChartData.datasets)[1].data.push(arr[j].testSuiteCount);
-        }
-      }
-      else {
-        arr.sort(compare("testCaseCount"));
-        for(var j=indx; j<(20+indx) && j<arr.length; j++) {
-          lineChartData.labels.push(arr[j].contr);
-          (lineChartData.datasets)[0].data.push(arr[j].testCaseCount);
-          (lineChartData.datasets)[1].data.push(arr[j].testSuiteCount);
-        }
-      }
+      arr = populateResults(testResults);
+      var barChart = createChart(arr, indx);
 
       document.getElementById("canvas_holder").innerHTML = '<canvas id="canvas" height="1000" width="2000"></canvas>';
       var ctx = document.getElementById("canvas").getContext("2d");
-      new Chart(ctx).Bar(lineChartData, {
+      new Chart(ctx).Bar(barChart, {
           responsive: true
       });
     }
-
-    // create a comparator to sort the arr[] by test case count
-    function compare(propertyName) {
-      return function (object1, object2) {
-        var value1 = object1[propertyName];
-        var value2 = object2[propertyName];
-        if (value2 < value1) {
-          return -1;
-        }
-        else if (value2 > value1) {
-          return 1;
-        }
-        else {
-          return 0;
-        }
-      }
-    }
+    
+    // show chart on load
     addEventListener("load", function () {
       loadJSONDoc(0);
     });
@@ -179,6 +87,7 @@
         </div>
       </div>
     </div>
+
     <div class="container-fluid">
       <h2>Please select contributor rank range</h2>
       <select multiple>
@@ -195,5 +104,6 @@
         <p>&copy; Twitter 2014</p>
       </footer>
     </div><!--/.fluid-container-->
+
   </body>
 </html>
