@@ -1,13 +1,11 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>mLeaderboard_chart</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <!-- Le styles -->
+    <title>mLeaderboard_chart</title>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/2.2.0/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
@@ -17,7 +15,6 @@
       .sidebar-nav {
         padding: 9px 0;
       }
-
       @media (max-width: 980px) {
         /* Enable use of floated navbar text */
         .navbar-text.pull-right {
@@ -29,41 +26,144 @@
     </style>
     <script src="./js/Chart.js"></script>
     <script src="./js/operData.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script type="text/javascript">
-    function loadJSONDoc(indx) {
+    function loadJSONDoc() {
       var xmlhttp=new XMLHttpRequest();
       xmlhttp.onload=function() {
         var txt = xmlhttp.responseText;
         var obj = JSON.parse(txt);
-        populate(obj, indx);
+        populate(obj);
       }
-      var url = "json/android/testsuites.json";
+
+      if (!window.location.search) {
+        var errMsg = "<h2>oops!</h2>";
+        errMsg = errMsg + "<ul class='nav nav-pills'>";
+        errMsg = errMsg + "<li id = 'ios'><a href='boardChart.html?ios'>ios</a></li>";
+        errMsg = errMsg + "<li id = 'android'><a href='boardChart.html?android'>android</a></li></ul>";
+        document.getElementById("content").innerHTML = errMsg;
+        return;
+      }
+      var os = window.location.search.substring(1);
+      document.getElementById(os).className = "active";
+      document.getElementById("boardchart").href = "boardChart.html?" + os;
+      document.getElementById("boardtable").href = "boardTable.html?" + os;
+      document.getElementById("boardtree").href = "boardTree.html?" + os;
+      var url = "json/" + os + "/testsuites.json";
+
       xmlhttp.open("GET", url, true);
       xmlhttp.send();
     }
 
-    function populate(testResults,indx) {
-      //create an array to save each contributor with his/her
-      //testCase and testSuite
-      //arr[i].contr, arr[i].testCases, arr[i].testSuites
-      var arr = new Array();
+    // Get the data and construct a data structure, create a chart to show
+    function populate(testResults) {
+      // Create an array arr to save each contributor with his/her testcase and testsuite
+      var arr = [];
       arr = populateResults(testResults);
+      var len = arr.length / 20;
+      // indxArray is for rank range
+      var indxArray = [];
+      for (var i = 0; i <= len; i++) {
+        indxArray.push(i);
+      }
+      createSelect(indxArray);
+      var e = document.getElementById("selectRange");
+      var indx = e.options[e.selectedIndex].value;
+      // Create a bar chart
       var barChart = createChart(arr, indx);
-
       document.getElementById("canvas_holder").innerHTML = '<canvas id="canvas" height="1000" width="2000"></canvas>';
       var ctx = document.getElementById("canvas").getContext("2d");
       new Chart(ctx).Bar(barChart, {
           responsive: true
       });
     }
-    
-    // show chart on load
-    addEventListener("load", function () {
-      loadJSONDoc(0);
+
+    // Create select with options
+    function createSelect(indxArray) {
+      var newSelect = document.getElementById('selectRange');
+      indxArray.forEach(function(value, index) {
+        var opt = document.createElement("option");
+        opt.value = index * 20;
+        var st = index * 20 + 1;
+        var ed = index * 20 + 20;
+        opt.innerHTML = st + '~' + ed;
+        newSelect.appendChild(opt);
+      });
+    }
+
+    // Reconstruct for bar chart -- create new data structure called barChartData
+    function createChart(arr, indx) {
+      var barChartData = {
+        labels: [],
+        datasets: [
+          {
+            label: "My First dataset",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: []
+          },
+          {
+            label: "My Second dataset",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: []
+          }
+        ]
+      }
+
+      arr.sort(compare("testCaseCount"));
+      var len = 0;
+      if ((20 + indx * 1) < arr.length) {
+        len = 20 + indx * 1;
+      }
+      else {
+        len = arr.length;
+      }
+      for (var j = indx; j < len; j++) {
+        barChartData.labels.push(arr[j].contr);
+        (barChartData.datasets)[0].data.push(arr[j].testCaseCount);
+        (barChartData.datasets)[1].data.push(arr[j].testSuiteCount);
+      }
+
+      return barChartData;
+    }
+
+    // Show chart on load
+    addEventListener("load", function() {
+      loadJSONDoc();
     });
+
+    // Load new chart when select another option
+    function loadNewData(indx) {
+      var xhr=new XMLHttpRequest();
+      xhr.onload=function() {
+        var txt = xhr.responseText;
+        var obj = JSON.parse(txt);
+        var arr = [];
+        arr = populateResults(obj);
+        var barChart = createChart(arr, indx*20);
+        document.getElementById("canvas_holder").innerHTML = '<canvas id="canvas" height="1000" width="2000"></canvas>';
+        var ctx = document.getElementById("canvas").getContext("2d");
+        new Chart(ctx).Bar(barChart, {
+            responsive: true
+        });
+      }
+      var os = window.location.search.substring(1);
+      var url = "json/" + os + "/testsuites.json";
+      xhr.open("GET", url, true);
+      xhr.send();
+    }
     </script>
   </head>
-  
+
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
@@ -75,28 +175,23 @@
           </button>
           <a class="brand" href="./boardChart.html">mLeaderboard</a>
           <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a>
-            </p>
             <ul class="nav">
-              <li class="active"><a href="./boardChart.html">Chart</a></li>
-              <li><a href="./boardTable.html">Table</a></li>
-              <li><a href="./boardTree.html">Tree</a></li>
+              <li class="active"><a href="boardChart.html" id="boardchart">Chart</a></li>
+              <li><a href="boardTable.html" id="boardtable">Table</a></li>
+              <li><a href="boardTree.html" id="boardtree">Tree</a></li>
+            </ul>
+            <ul class="nav pull-right">
+              <li id = "ios"><a href="boardChart.html?ios">ios</a></li>
+              <li id = "android"><a href="boardChart.html?android">android</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container-fluid">
-      <h2>Please select contributor rank range</h2>
-      <select multiple>
-        <option onclick="loadJSONDoc(0)">1~20</option>
-        <option onclick="loadJSONDoc(20)">21~40</option>
-        <option onclick="loadJSONDoc(40)">41~60</option>
-        <option onclick="loadJSONDoc(60)">61~max</option>
-        <option onclick="loadJSONDoc(100)">random</option>
-      </select>
+    <div class="container-fluid" id="content">
+      <h2>Leaderboard Chart</h2>
+      Please select the rank range: <select id="selectRange" onchange="loadNewData(this.selectedIndex)"></select>
       <div id="canvas_holder" style="width:80%">
       </div>
       <hr>

@@ -4213,80 +4213,80 @@
                 "lines": [
                     {
                         "last_modified_date": "2014-04-25 14:10:18 -0700", 
-                        "line_content": "60)- (void)testSendTweetAndFavorite", 
-                        "abbr_hash": "6707b8d4", 
-                        "last_modifier_email": "jzucker@twitter.com", 
-                        "line_num": 60
-                    }, 
-                    {
-                        "last_modified_date": "2014-04-25 14:10:18 -0700", 
-                        "line_content": "61){", 
-                        "abbr_hash": "6707b8d4", 
-                        "last_modifier_email": "jzucker@twitter.com", 
-                        "line_num": 61
-                    }, 
-                    {
-                        "last_modified_date": "2014-04-25 14:10:18 -0700", 
-                        "line_content": "62)    NSString *currentTimestamp = [self sendTweetWithCurrentTimestamp];", 
+                        "line_content": "62)- (void)testSendTweetAndFavorite", 
                         "abbr_hash": "6707b8d4", 
                         "last_modifier_email": "jzucker@twitter.com", 
                         "line_num": 62
                     }, 
                     {
-                        "last_modified_date": "2014-06-24 10:56:50 -0700", 
-                        "line_content": "63)    [self goToHomeTimeline];", 
-                        "abbr_hash": "0f87a18f", 
-                        "last_modifier_email": "jwen@twitter.com", 
+                        "last_modified_date": "2014-04-25 14:10:18 -0700", 
+                        "line_content": "63){", 
+                        "abbr_hash": "6707b8d4", 
+                        "last_modifier_email": "jzucker@twitter.com", 
                         "line_num": 63
                     }, 
                     {
                         "last_modified_date": "2014-04-25 14:10:18 -0700", 
-                        "line_content": "64)    STTweetCell *tweetCell = [STTweetCell tweetCellWithUsername:[self currentUserUsername] text:currentTimestamp];", 
+                        "line_content": "64)    NSString *currentTimestamp = [self sendTweetWithCurrentTimestamp];", 
                         "abbr_hash": "6707b8d4", 
                         "last_modifier_email": "jzucker@twitter.com", 
                         "line_num": 64
                     }, 
                     {
-                        "last_modified_date": "2014-07-01 10:12:29 -0700", 
-                        "line_content": "65)    [self pullToRefreshElementWithIdentifier:HOME_TIMELINE_ID];", 
-                        "abbr_hash": "6a120ed7", 
-                        "last_modifier_email": "jkozemczak@twitter.com", 
+                        "last_modified_date": "2014-06-24 10:56:50 -0700", 
+                        "line_content": "65)    [self goToHomeTimeline];", 
+                        "abbr_hash": "0f87a18f", 
+                        "last_modifier_email": "jwen@twitter.com", 
                         "line_num": 65
                     }, 
                     {
                         "last_modified_date": "2014-04-25 14:10:18 -0700", 
-                        "line_content": "66)    SLAssertTrueWithTimeout([UIAElement(tweetCell) isValidAndVisible], 60, @\"Tweet cell did not appear\");", 
+                        "line_content": "66)    STTweetCell *tweetCell = [STTweetCell tweetCellWithUsername:[self currentUserUsername] text:currentTimestamp];", 
                         "abbr_hash": "6707b8d4", 
                         "last_modifier_email": "jzucker@twitter.com", 
                         "line_num": 66
                     }, 
                     {
-                        "last_modified_date": "2014-06-13 11:14:32 -0700", 
-                        "line_content": "67)    SLAssertTrueWithTimeout(![UIAElement(tweetCell) isFavorited], 45, @\"favorite button should start off for new tweet\");", 
-                        "abbr_hash": "08c47fe2", 
-                        "last_modifier_email": "jwen@twitter.com", 
+                        "last_modified_date": "2014-07-01 10:12:29 -0700", 
+                        "line_content": "67)    [self pullToRefreshElementWithIdentifier:HOME_TIMELINE_ID];", 
+                        "abbr_hash": "6a120ed7", 
+                        "last_modifier_email": "jkozemczak@twitter.com", 
                         "line_num": 67
                     }, 
                     {
-                        "last_modified_date": "2014-06-13 11:14:32 -0700", 
-                        "line_content": "68)    [tweetCell tapInlineFavorite];", 
-                        "abbr_hash": "08c47fe2", 
-                        "last_modifier_email": "jwen@twitter.com", 
+                        "last_modified_date": "2014-04-25 14:10:18 -0700", 
+                        "line_content": "68)    SLAssertTrueWithTimeout([UIAElement(tweetCell) isValidAndVisible], 60, @\"Tweet cell did not appear\");", 
+                        "abbr_hash": "6707b8d4", 
+                        "last_modifier_email": "jzucker@twitter.com", 
                         "line_num": 68
                     }, 
                     {
                         "last_modified_date": "2014-06-13 11:14:32 -0700", 
-                        "line_content": "69)    SLAssertTrueWithTimeout([UIAElement(tweetCell) isFavorited], 45, @\"favorite button should now be on\");", 
+                        "line_content": "69)    SLAssertTrueWithTimeout(![UIAElement(tweetCell) isFavorited], 45, @\"favorite button should start off for new tweet\");", 
                         "abbr_hash": "08c47fe2", 
                         "last_modifier_email": "jwen@twitter.com", 
                         "line_num": 69
                     }, 
                     {
+                        "last_modified_date": "2014-06-13 11:14:32 -0700", 
+                        "line_content": "70)    [tweetCell tapInlineFavorite];", 
+                        "abbr_hash": "08c47fe2", 
+                        "last_modifier_email": "jwen@twitter.com", 
+                        "line_num": 70
+                    }, 
+                    {
+                        "last_modified_date": "2014-06-13 11:14:32 -0700", 
+                        "line_content": "71)    SLAssertTrueWithTimeout([UIAElement(tweetCell) isFavorited], 45, @\"favorite button should now be on\");", 
+                        "abbr_hash": "08c47fe2", 
+                        "last_modifier_email": "jwen@twitter.com", 
+                        "line_num": 71
+                    }, 
+                    {
                         "last_modified_date": "2014-04-25 14:10:18 -0700", 
-                        "line_content": "70)}", 
+                        "line_content": "72)}", 
                         "abbr_hash": "6707b8d4", 
                         "last_modifier_email": "jzucker@twitter.com", 
-                        "line_num": 70
+                        "line_num": 72
                     }
                 ], 
                 "created_commit_log": "commit 6707b8d41437bf1ddf61c7b8b126af2f90287d2d\nAuthor: Jordan Zucker <jzucker@twitter.com>\nDate:   Fri Apr 25 14:10:18 2014 -0700\n\n    Needed to add special STTweetCell for automation.\n    \n    Twitter has special view hierarchy, so needs a special STTweetCell\n    object for automation and manipulation of child accessibility\n    elements in automation.\n    \n    Change-Id: I06e1a9f342abcbde7dcb4c083fa4a75f2cfb6876\n", 
@@ -4367,15 +4367,14 @@
                 "modified_by": "jkozemczak@twitter.com"
             }, 
             "testSendTweetAndVerify": {
-                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/42723/", 
+                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/44716/", 
                 "created_gerrit_link": "https://gerrit.twitter.biz/#/c/36886/", 
                 "name": "testSendTweetAndVerify", 
                 "contributors": [
                     "jzucker@twitter.com", 
-                    "jwen@twitter.com", 
-                    "jkozemczak@twitter.com"
+                    "jgary@twitter.com"
                 ], 
-                "modified_at": "2014-07-01 10:12:29 -0700", 
+                "modified_at": "2014-07-29 20:22:59 -0700", 
                 "created_at": "2014-04-24 19:30:39 -0700", 
                 "lines": [
                     {
@@ -4393,54 +4392,68 @@
                         "line_num": 52
                     }, 
                     {
-                        "last_modified_date": "2014-04-24 19:30:39 -0700", 
-                        "line_content": "53)    NSString *currentTimestamp = [self sendTweetWithCurrentTimestamp];", 
-                        "abbr_hash": "6ae38bd4", 
-                        "last_modifier_email": "jzucker@twitter.com", 
+                        "last_modified_date": "2014-07-29 20:22:59 -0700", 
+                        "line_content": "53)    [self monitorPerformanceDuringActions:^{", 
+                        "abbr_hash": "f8dbe98e", 
+                        "last_modifier_email": "jgary@twitter.com", 
                         "line_num": 53
                     }, 
                     {
-                        "last_modified_date": "2014-06-24 10:56:50 -0700", 
-                        "line_content": "54)    [self goToHomeTimeline];", 
-                        "abbr_hash": "0f87a18f", 
-                        "last_modifier_email": "jwen@twitter.com", 
+                        "last_modified_date": "2014-07-29 20:22:59 -0700", 
+                        "line_content": "54)        NSString *currentTimestamp = [self sendTweetWithCurrentTimestamp];", 
+                        "abbr_hash": "f8dbe98e", 
+                        "last_modifier_email": "jgary@twitter.com", 
                         "line_num": 54
                     }, 
                     {
-                        "last_modified_date": "2014-04-25 14:10:18 -0700", 
-                        "line_content": "55)    STTweetCell *tweetCell = [STTweetCell tweetCellWithUsername:[self currentUserUsername] text:currentTimestamp];", 
-                        "abbr_hash": "6707b8d4", 
-                        "last_modifier_email": "jzucker@twitter.com", 
+                        "last_modified_date": "2014-07-29 20:22:59 -0700", 
+                        "line_content": "55)        [self goToHomeTimeline];", 
+                        "abbr_hash": "f8dbe98e", 
+                        "last_modifier_email": "jgary@twitter.com", 
                         "line_num": 55
                     }, 
                     {
-                        "last_modified_date": "2014-07-01 10:12:29 -0700", 
-                        "line_content": "56)    [self pullToRefreshElementWithIdentifier:HOME_TIMELINE_ID];", 
-                        "abbr_hash": "6a120ed7", 
-                        "last_modifier_email": "jkozemczak@twitter.com", 
+                        "last_modified_date": "2014-07-29 20:22:59 -0700", 
+                        "line_content": "56)        STTweetCell *tweetCell = [STTweetCell tweetCellWithUsername:[self currentUserUsername] text:currentTimestamp];", 
+                        "abbr_hash": "f8dbe98e", 
+                        "last_modifier_email": "jgary@twitter.com", 
                         "line_num": 56
                     }, 
                     {
-                        "last_modified_date": "2014-04-24 19:30:39 -0700", 
-                        "line_content": "57)    SLAssertTrueWithTimeout([UIAElement(tweetCell) isValidAndVisible], 60, @\"Tweet cell did not appear\");", 
-                        "abbr_hash": "6ae38bd4", 
-                        "last_modifier_email": "jzucker@twitter.com", 
+                        "last_modified_date": "2014-07-29 20:22:59 -0700", 
+                        "line_content": "57)        [self pullToRefreshElementWithIdentifier:HOME_TIMELINE_ID];", 
+                        "abbr_hash": "f8dbe98e", 
+                        "last_modifier_email": "jgary@twitter.com", 
                         "line_num": 57
                     }, 
                     {
+                        "last_modified_date": "2014-07-29 20:22:59 -0700", 
+                        "line_content": "58)        SLAssertTrueWithTimeout([UIAElement(tweetCell) isValidAndVisible], 60, @\"Tweet cell did not appear\");", 
+                        "abbr_hash": "f8dbe98e", 
+                        "last_modifier_email": "jgary@twitter.com", 
+                        "line_num": 58
+                    }, 
+                    {
+                        "last_modified_date": "2014-07-29 20:22:59 -0700", 
+                        "line_content": "59)    }];", 
+                        "abbr_hash": "f8dbe98e", 
+                        "last_modifier_email": "jgary@twitter.com", 
+                        "line_num": 59
+                    }, 
+                    {
                         "last_modified_date": "2014-04-24 19:30:39 -0700", 
-                        "line_content": "58)}", 
+                        "line_content": "60)}", 
                         "abbr_hash": "6ae38bd4", 
                         "last_modifier_email": "jzucker@twitter.com", 
-                        "line_num": 58
+                        "line_num": 60
                     }
                 ], 
                 "created_commit_log": "commit 6ae38bd46fbdc5fd295912b33a919e9563ee796b\nAuthor: Jordan Zucker <jzucker@twitter.com>\nDate:   Thu Apr 24 19:30:39 2014 -0700\n\n    Update Subliminal to be closer to 1.1 and add ax child methods\n    \n    Updated AX value of status cell to include user along with\n    status since identifier is tweet ID.\n    \n    Change-Id: I2e75a6117f9efedb21c33c5e2c63d8185ac085fc\n", 
                 "created_by": "jzucker@twitter.com", 
-                "modified_in": "6a120ed7", 
-                "modified_commit_log": "commit 6a120ed7baf550acc07e115c44b9cbe4d5fb054d\nAuthor: Jason Kozemczak <jkozemczak@twitter.com>\nDate:   Tue Jul 1 10:12:29 2014 -0700\n\n    Update AX method name / reduce duplication\n    \n    Change-Id: Ia46e3db4788b28a68a416a968df1523cac56a61a\n", 
+                "modified_in": "f8dbe98e", 
+                "modified_commit_log": "commit f8dbe98e59672809fece33bb024113a2233d9b50\nAuthor: Jonathan Gary <jgary@twitter.com>\nDate:   Tue Jul 29 20:22:59 2014 -0700\n\n    Add support for sampling the CPU time and usage.\n    \n    Also add a composite sampler for running several samplers\n    together on the same schedule.\n    \n    Added example of adding performance monitoring to a test, but need\n    logging framework in place to log correctly.\n    \n    Part of MOBAUTO-176.\n    Jira-Id: MOBAUTO-176\n    \n    Change-Id: Ic65d4d01f7461079611afe89716a0ae5ec5823bc\n", 
                 "created_in": "6ae38bd4", 
-                "modified_by": "jkozemczak@twitter.com"
+                "modified_by": "jgary@twitter.com"
             }
         }, 
         "name": "STHomeTimelineTest", 
@@ -6529,14 +6542,15 @@
     "STTweetImpressionEchidnaTest": {
         "test_cases": {
             "testSearchUniversalTweetImpressions": {
-                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/42723/", 
+                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/45470/", 
                 "created_gerrit_link": "https://gerrit.twitter.biz/#/c/37427/", 
                 "name": "testSearchUniversalTweetImpressions", 
                 "contributors": [
                     "jwen@twitter.com", 
+                    "spanage@twitter.com", 
                     "jkozemczak@twitter.com"
                 ], 
-                "modified_at": "2014-07-01 10:12:29 -0700", 
+                "modified_at": "2014-08-05 16:03:23 -0700", 
                 "created_at": "2014-05-01 22:00:52 -0700", 
                 "lines": [
                     {
@@ -6561,10 +6575,10 @@
                         "line_num": 84
                     }, 
                     {
-                        "last_modified_date": "2014-05-01 22:00:52 -0700", 
-                        "line_content": "85)    SLButton *searchButton = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_SEARCH_ACTION_LABEL];", 
-                        "abbr_hash": "3c06ac41", 
-                        "last_modifier_email": "jwen@twitter.com", 
+                        "last_modified_date": "2014-08-05 16:03:23 -0700", 
+                        "line_content": "85)    SLButton *searchButton = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_SEARCH_ACTION_ACCESSIBILITY_LABEL];", 
+                        "abbr_hash": "e1bba5e8", 
+                        "last_modifier_email": "spanage@twitter.com", 
                         "line_num": 85
                     }, 
                     {
@@ -6619,10 +6633,10 @@
                 ], 
                 "created_commit_log": "commit 3c06ac41bf180953f761328665261955e36ef5da\nAuthor: John Wen <jwen@twitter.com>\nDate:   Thu May 1 22:00:52 2014 -0700\n\n    Add mobile tweet impressions Echidna tests\n    \n    Added tests for:\n    -home-get-older-tweet-impressions\n    -home-tweet-impressions\n    -network-activity-tweet-impressions\n    -profile-tweet-impressions\n    -search-universal-tweet-impressions\n    -tweet-tweet-impressions\n    \n    Change-Id: I0a7138075f75d031df5401766318871c516245e6\n", 
                 "created_by": "jwen@twitter.com", 
-                "modified_in": "6a120ed7", 
-                "modified_commit_log": "commit 6a120ed7baf550acc07e115c44b9cbe4d5fb054d\nAuthor: Jason Kozemczak <jkozemczak@twitter.com>\nDate:   Tue Jul 1 10:12:29 2014 -0700\n\n    Update AX method name / reduce duplication\n    \n    Change-Id: Ia46e3db4788b28a68a416a968df1523cac56a61a\n", 
+                "modified_in": "e1bba5e8", 
+                "modified_commit_log": "commit e1bba5e84c57eebba7d428b2204958523dcc9cec\nAuthor: Sommer Panage <spanage@twitter.com>\nDate:   Tue Aug 5 16:03:23 2014 -0700\n\n    AX: Round 1 of great accessibility strings cleanup\n    \n    Details can be found here:\n    https://confluence.twitter.biz/display/MOBILE/Accessibility+String+Cleanup+Proposal\n    \n    The round mostly deals with \"abnormal\" cases that are\n    difficult to scirpt -- strings assigned via long code\n    paths, etc. In many cases we create a duplicate AX\n    string for various standard actions to help prevent common\n    bugs due to misuse of standard strings for AX strings and vice\n    versa.\n    \n    Jira: MAX-293\n    Change-Id: I86fa0ce65feebb68332c40cbf9474c253f57e8c8\n", 
                 "created_in": "3c06ac41", 
-                "modified_by": "jkozemczak@twitter.com"
+                "modified_by": "spanage@twitter.com"
             }, 
             "testHomeGetOlderTweetImpressions": {
                 "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/42723/", 
@@ -7239,7 +7253,7 @@
     "STMVPTest": {
         "test_cases": {
             "testSignIn": {
-                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/44880/", 
+                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/45386/", 
                 "created_gerrit_link": "https://gerrit.twitter.biz/#/c/36237/", 
                 "name": "testSignIn", 
                 "contributors": [
@@ -7247,7 +7261,7 @@
                     "kxing@twitter.com", 
                     "jkozemczak@twitter.com"
                 ], 
-                "modified_at": "2014-07-31 14:28:16 -0700", 
+                "modified_at": "2014-08-06 10:06:11 -0700", 
                 "created_at": "2014-04-15 11:52:19 -0700", 
                 "lines": [
                     {
@@ -7377,9 +7391,9 @@
                         "line_num": 128
                     }, 
                     {
-                        "last_modified_date": "2014-07-22 12:16:58 -0700", 
-                        "line_content": "129)        SLAssertTrueWithTimeout(![UIAElement(signInButton) isValid], DEFAULT_TIMEOUT, @\"Sign in button should have disappeared.\");", 
-                        "abbr_hash": "389385a3", 
+                        "last_modified_date": "2014-08-06 10:06:11 -0700", 
+                        "line_content": "129)        SLAssertTrueWithTimeout(![UIAElement(signInButton) isValid], DEFAULT_LONG_TIMEOUT, @\"Sign in button should have disappeared.\");", 
+                        "abbr_hash": "dd235bd9", 
                         "last_modifier_email": "jwen@twitter.com", 
                         "line_num": 129
                     }, 
@@ -7442,8 +7456,8 @@
                 ], 
                 "created_commit_log": "commit 43d6b55b8f7f15f1e7bc3be80bdc14c91e8480c0\nAuthor: John Wen <jwen@twitter.com>\nDate:   Tue Apr 15 11:52:19 2014 -0700\n\n    Add UI automation for MVP tweet scenarios\n    \n    Change-Id: Ibd74075ac640a98dd89430686d327ebb784a1539\n    JIRA: MOBILEQA-347\n", 
                 "created_by": "jwen@twitter.com", 
-                "modified_in": "6872f733", 
-                "modified_commit_log": "commit 6872f7339849f07819cd6bd31ce4cce4fcf35aa6\nAuthor: John Wen <jwen@twitter.com>\nDate:   Thu Jul 31 14:28:16 2014 -0700\n\n    Skip onboarding in MVP testSignIn\n    \n    Change-Id: Iacb657e5d3bd953d5aba304fd74c8b1c965a4329\n", 
+                "modified_in": "dd235bd9", 
+                "modified_commit_log": "commit dd235bd9e283370f11349e536b279c1d93fc139b\nAuthor: John Wen <jwen@twitter.com>\nDate:   Wed Aug 6 10:06:11 2014 -0700\n\n    Need longer timeout for sign in view to close\n    \n    Added DEFAULT_LONG_TIMEOUT for when the default 5 second\n    timeout isn't enough.\n    \n    Change-Id: I37df6df0fcd079e806b9edc56b2bee296038269f\n    JIRA: MOBAUTO-660\n", 
                 "created_in": "43d6b55b", 
                 "modified_by": "jwen@twitter.com"
             }, 
@@ -8114,7 +8128,7 @@
                 "modified_by": "jwen@twitter.com"
             }, 
             "testTweetALink": {
-                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/41095/", 
+                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/45386/", 
                 "created_gerrit_link": "https://gerrit.twitter.biz/#/c/36237/", 
                 "name": "testTweetALink", 
                 "contributors": [
@@ -8122,7 +8136,7 @@
                     "kxing@twitter.com", 
                     "mstroe@twitter.com"
                 ], 
-                "modified_at": "2014-06-09 10:08:27 -0700", 
+                "modified_at": "2014-08-06 10:06:11 -0700", 
                 "created_at": "2014-04-15 11:52:19 -0700", 
                 "lines": [
                     {
@@ -8329,9 +8343,9 @@
                         "line_num": 246
                     }, 
                     {
-                        "last_modified_date": "2014-04-15 11:52:19 -0700", 
-                        "line_content": "247)    SLAssertTrueWithTimeout([[UIAElement(titleElement) value] containsSubstring:webPageTitle], 20, @\"Web page title should contain '%@'.  Instead it is '%@'.\", webPageTitle, [UIAElement(titleElement) value]);", 
-                        "abbr_hash": "43d6b55b", 
+                        "last_modified_date": "2014-08-06 10:06:11 -0700", 
+                        "line_content": "247)    SLAssertTrueWithTimeout([[UIAElement(titleElement) value] containsSubstring:webPageTitle], DEFAULT_LONG_TIMEOUT, @\"Web page title should contain '%@'.  Instead it is '%@'.\", webPageTitle, [UIAElement(titleElement) value]);", 
+                        "abbr_hash": "dd235bd9", 
                         "last_modifier_email": "jwen@twitter.com", 
                         "line_num": 247
                     }, 
@@ -8380,8 +8394,8 @@
                 ], 
                 "created_commit_log": "commit 43d6b55b8f7f15f1e7bc3be80bdc14c91e8480c0\nAuthor: John Wen <jwen@twitter.com>\nDate:   Tue Apr 15 11:52:19 2014 -0700\n\n    Add UI automation for MVP tweet scenarios\n    \n    Change-Id: Ibd74075ac640a98dd89430686d327ebb784a1539\n    JIRA: MOBILEQA-347\n", 
                 "created_by": "jwen@twitter.com", 
-                "modified_in": "64fc4c34", 
-                "modified_commit_log": "commit 64fc4c34b55ed7f7fa7426f65bfbceb5323dbb9b\nAuthor: John Wen <jwen@twitter.com>\nDate:   Mon Jun 9 10:08:27 2014 -0700\n\n    Wait for UI elements to disappear\n    \n    Fix multiple instances where waiting for a UI element\n    to disappear is required.\n    1. trySignInWithUsername - when testing that sign in\n    button is gone.\n    2. testTweetALink - the web page takes some time to go\n    away.  Without the wait for the close button,\n    tearDownTestCase sees the close button and tries to\n    tap it again.\n    3. closeSignInOrSignUpViewController - make sure cancel\n    button is gone so that tearDownTestCase doesn't try to\n    tap it again.\n    \n    Change-Id: I04f23104c46553b108674068e853768bc5a049c3\n    JIRA: MOBILAQA-433\n", 
+                "modified_in": "dd235bd9", 
+                "modified_commit_log": "commit dd235bd9e283370f11349e536b279c1d93fc139b\nAuthor: John Wen <jwen@twitter.com>\nDate:   Wed Aug 6 10:06:11 2014 -0700\n\n    Need longer timeout for sign in view to close\n    \n    Added DEFAULT_LONG_TIMEOUT for when the default 5 second\n    timeout isn't enough.\n    \n    Change-Id: I37df6df0fcd079e806b9edc56b2bee296038269f\n    JIRA: MOBAUTO-660\n", 
                 "created_in": "43d6b55b", 
                 "modified_by": "jwen@twitter.com"
             }, 
@@ -8447,14 +8461,14 @@
                 "modified_by": "kxing@twitter.com"
             }, 
             "testSendAndViewDirectMessage": {
-                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/38354/", 
+                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/45386/", 
                 "created_gerrit_link": "https://gerrit.twitter.biz/#/c/35793/", 
                 "name": "testSendAndViewDirectMessage", 
                 "contributors": [
                     "jwen@twitter.com", 
                     "kxing@twitter.com"
                 ], 
-                "modified_at": "2014-05-12 12:00:07 -0700", 
+                "modified_at": "2014-08-06 10:06:11 -0700", 
                 "created_at": "2014-04-04 11:24:07 -0700", 
                 "lines": [
                     {
@@ -8542,10 +8556,10 @@
                         "line_num": 411
                     }, 
                     {
-                        "last_modified_date": "2014-05-12 12:00:07 -0700", 
-                        "line_content": "412)        SLAssertTrueWithTimeout([[self readDirectMessage:dmText fromUser:USER1_USERNAME fullName:USER1_FULL_NAME] isEqualToString:dmText], 30, @\"Did not read the same DM that was sent.  Expected: '%@'.\", dmText);", 
-                        "abbr_hash": "351d336a", 
-                        "last_modifier_email": "kxing@twitter.com", 
+                        "last_modified_date": "2014-08-06 10:06:11 -0700", 
+                        "line_content": "412)        SLAssertTrueWithTimeout([[self readDirectMessage:dmText fromUser:USER1_USERNAME fullName:USER1_FULL_NAME] isEqualToString:dmText], DEFAULT_LONG_TIMEOUT, @\"Did not read the same DM that was sent.  Expected: '%@'.\", dmText);", 
+                        "abbr_hash": "dd235bd9", 
+                        "last_modifier_email": "jwen@twitter.com", 
                         "line_num": 412
                     }, 
                     {
@@ -8565,10 +8579,10 @@
                 ], 
                 "created_commit_log": "commit 5897ba59f0441969a15d76381104fd106eb0ac50\nAuthor: John Wen <jwen@twitter.com>\nDate:   Fri Apr 4 11:24:07 2014 -0700\n\n    Add UI automation for MVP timelines, direct message and follow scenarios\n    \n    Change-Id: I22e738e4abd6566e02e428aa75e2baac6058c198\n", 
                 "created_by": "jwen@twitter.com", 
-                "modified_in": "351d336a", 
-                "modified_commit_log": "commit 351d336a1121af93237bd89710ef75c33f00fc38\nAuthor: Kevin Xing <kxing@twitter.com>\nDate:   Mon May 12 12:00:07 2014 -0700\n\n    Enable HTTP Traffic Profiling for MVP Test Cases\n    \n    Add code to record timestamp of interested actions in MVP test cases.\n    \n    Change-Id: I3b6bd0258824c07cab83b2888d88d721e77586e3\n    JIRA: MOBILEQA-349\n", 
+                "modified_in": "dd235bd9", 
+                "modified_commit_log": "commit dd235bd9e283370f11349e536b279c1d93fc139b\nAuthor: John Wen <jwen@twitter.com>\nDate:   Wed Aug 6 10:06:11 2014 -0700\n\n    Need longer timeout for sign in view to close\n    \n    Added DEFAULT_LONG_TIMEOUT for when the default 5 second\n    timeout isn't enough.\n    \n    Change-Id: I37df6df0fcd079e806b9edc56b2bee296038269f\n    JIRA: MOBAUTO-660\n", 
                 "created_in": "5897ba59", 
-                "modified_by": "kxing@twitter.com"
+                "modified_by": "jwen@twitter.com"
             }, 
             "testTweetAnImageThenDelete": {
                 "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/42084/", 
@@ -8839,14 +8853,15 @@
                 "modified_by": "kxing@twitter.com"
             }, 
             "testTweetPlainTextThenDelete": {
-                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/42327/", 
+                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/45470/", 
                 "created_gerrit_link": "https://gerrit.twitter.biz/#/c/36237/", 
                 "name": "testTweetPlainTextThenDelete", 
                 "contributors": [
                     "jwen@twitter.com", 
-                    "kxing@twitter.com"
+                    "kxing@twitter.com", 
+                    "spanage@twitter.com"
                 ], 
-                "modified_at": "2014-06-24 18:19:35 -0700", 
+                "modified_at": "2014-08-05 16:03:23 -0700", 
                 "created_at": "2014-04-15 11:52:19 -0700", 
                 "lines": [
                     {
@@ -8920,10 +8935,10 @@
                         "line_num": 176
                     }, 
                     {
-                        "last_modified_date": "2014-04-15 11:52:19 -0700", 
-                        "line_content": "177)    SLButton *replyButton = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_REPLY_ACTION_LABEL];", 
-                        "abbr_hash": "43d6b55b8", 
-                        "last_modifier_email": "jwen@twitter.com", 
+                        "last_modified_date": "2014-08-05 16:03:23 -0700", 
+                        "line_content": "177)    SLButton *replyButton = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_REPLY_ACTION_ACCESSIBILITY_LABEL];", 
+                        "abbr_hash": "e1bba5e84", 
+                        "last_modifier_email": "spanage@twitter.com", 
                         "line_num": 177
                     }, 
                     {
@@ -8941,10 +8956,10 @@
                         "line_num": 179
                     }, 
                     {
-                        "last_modified_date": "2014-04-15 11:52:19 -0700", 
-                        "line_content": "180)    SLButton *retweetButton = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_RETWEET_ACTION_LABEL];", 
-                        "abbr_hash": "43d6b55b8", 
-                        "last_modifier_email": "jwen@twitter.com", 
+                        "last_modified_date": "2014-08-05 16:03:23 -0700", 
+                        "line_content": "180)    SLButton *retweetButton = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_RETWEET_ACTION_ACCESSIBILITY_LABEL];", 
+                        "abbr_hash": "e1bba5e84", 
+                        "last_modifier_email": "spanage@twitter.com", 
                         "line_num": 180
                     }, 
                     {
@@ -8969,10 +8984,10 @@
                         "line_num": 183
                     }, 
                     {
-                        "last_modified_date": "2014-04-15 11:52:19 -0700", 
-                        "line_content": "184)    SLButton *favoriteButton = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_FAVORITE_ACTION_LABEL];", 
-                        "abbr_hash": "43d6b55b8", 
-                        "last_modifier_email": "jwen@twitter.com", 
+                        "last_modified_date": "2014-08-05 16:03:23 -0700", 
+                        "line_content": "184)    SLButton *favoriteButton = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_FAVORITE_ACTION_ACCESSIBILITY_LABEL];", 
+                        "abbr_hash": "e1bba5e84", 
+                        "last_modifier_email": "spanage@twitter.com", 
                         "line_num": 184
                     }, 
                     {
@@ -9188,10 +9203,10 @@
                 ], 
                 "created_commit_log": "commit 43d6b55b8f7f15f1e7bc3be80bdc14c91e8480c0\nAuthor: John Wen <jwen@twitter.com>\nDate:   Tue Apr 15 11:52:19 2014 -0700\n\n    Add UI automation for MVP tweet scenarios\n    \n    Change-Id: Ibd74075ac640a98dd89430686d327ebb784a1539\n    JIRA: MOBILEQA-347\n", 
                 "created_by": "jwen@twitter.com", 
-                "modified_in": "d4e695ca9", 
-                "modified_commit_log": "commit d4e695ca9f0dfc0ebf08e962353c32b096dd2e22\nAuthor: John Wen <jwen@twitter.com>\nDate:   Tue Jun 24 18:19:35 2014 -0700\n\n    Add deleteTweet app hook\n    \n    Many tests are deleting tweets when they're done.\n    Doing this through UI every time is too slow and\n    fragile.\n    \n    Change-Id: I655f236cc5cb7d521129d1be1950709b9521792b\n    JIRA: MOBAUTO-404\n", 
+                "modified_in": "e1bba5e84", 
+                "modified_commit_log": "commit e1bba5e84c57eebba7d428b2204958523dcc9cec\nAuthor: Sommer Panage <spanage@twitter.com>\nDate:   Tue Aug 5 16:03:23 2014 -0700\n\n    AX: Round 1 of great accessibility strings cleanup\n    \n    Details can be found here:\n    https://confluence.twitter.biz/display/MOBILE/Accessibility+String+Cleanup+Proposal\n    \n    The round mostly deals with \"abnormal\" cases that are\n    difficult to scirpt -- strings assigned via long code\n    paths, etc. In many cases we create a duplicate AX\n    string for various standard actions to help prevent common\n    bugs due to misuse of standard strings for AX strings and vice\n    versa.\n    \n    Jira: MAX-293\n    Change-Id: I86fa0ce65feebb68332c40cbf9474c253f57e8c8\n", 
                 "created_in": "43d6b55b8", 
-                "modified_by": "jwen@twitter.com"
+                "modified_by": "spanage@twitter.com"
             }, 
             "testFavoriteATweet": {
                 "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/38418/", 
@@ -10086,61 +10101,54 @@
                 "modified_by": "jkozemczak@twitter.com"
             }, 
             "testAmbiguousErrorChooseUsername": {
-                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/43789/", 
+                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/45465/", 
                 "created_gerrit_link": "https://gerrit.twitter.biz/#/c/43789/", 
                 "name": "testAmbiguousErrorChooseUsername", 
                 "contributors": [
                     "btirca@twitter.com"
                 ], 
-                "modified_at": "2014-07-14 14:12:16 -0700", 
+                "modified_at": "2014-08-06 13:23:51 -0700", 
                 "created_at": "2014-07-14 14:12:16 -0700", 
                 "lines": [
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "173)- (void)testAmbiguousErrorChooseUsername", 
-                        "abbr_hash": "47ff00a8", 
-                        "last_modifier_email": "btirca@twitter.com", 
-                        "line_num": 173
-                    }, 
-                    {
-                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "174){", 
+                        "line_content": "174)- (void)testAmbiguousErrorChooseUsername", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 174
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "175)    [self _testInsertCredentialsWithUsername:@\"4153506221\" password:@\"username\"];", 
+                        "line_content": "175){", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 175
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "176)", 
+                        "line_content": "176)    [self _testInsertCredentialsWithUsername:@\"4153506221\" password:@\"username\"];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 176
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "177)    SLButton *signInButton = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_SIGN_IN_ACTION_ACCESSIBILITY_LABEL];", 
+                        "line_content": "177)", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 177
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "178)", 
+                        "line_content": "178)    SLButton *signInButton = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_SIGN_IN_ACTION_ACCESSIBILITY_LABEL];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 178
                     }, 
                     {
-                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "179)    [self setHandlerForAlertTitled:LOCALIZABLE_PHONE_OR_USERNAME_ALERT_TITLE byDismissingButtonTitled:LOCALIZABLE_USERNAME_ACTION_LABEL];", 
-                        "abbr_hash": "47ff00a8", 
+                        "last_modified_date": "2014-08-06 13:23:51 -0700", 
+                        "line_content": "179)    SLTextField *usernameField = [SLTextField elementWithAccessibilityIdentifier:AX_USERNAME_TEXTFIELD];", 
+                        "abbr_hash": "dc9e7cad", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 179
                     }, 
@@ -10153,7 +10161,7 @@
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "181)    [self setHandlerForAlertTitled:LOCALIZABLE_ACCOUNT_AUTHENTICATION_FAILED_ERROR_ALERT_TITLE byDismissingButtonTitled:LOCALIZABLE_OK_ACTION_LABEL];", 
+                        "line_content": "181)    [self setHandlerForAlertTitled:LOCALIZABLE_PHONE_OR_USERNAME_ALERT_TITLE byDismissingButtonTitled:LOCALIZABLE_USERNAME_ACTION_LABEL];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 181
@@ -10166,9 +10174,9 @@
                         "line_num": 182
                     }, 
                     {
-                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "183)    [UIAElement(signInButton) tap];", 
-                        "abbr_hash": "47ff00a8", 
+                        "last_modified_date": "2014-08-06 13:23:51 -0700", 
+                        "line_content": "183)    SLAlertHandler *secondHandler = [self setHandlerForAlertTitled:LOCALIZABLE_ACCOUNT_AUTHENTICATION_FAILED_ERROR_ALERT_TITLE byDismissingButtonTitled:LOCALIZABLE_OK_ACTION_LABEL];", 
+                        "abbr_hash": "dc9e7cad", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 183
                     }, 
@@ -10181,7 +10189,7 @@
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "185)    [self wait:1.0];", 
+                        "line_content": "185)    [UIAElement(signInButton) tap];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 185
@@ -10194,125 +10202,125 @@
                         "line_num": 186
                     }, 
                     {
-                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "187)    SLTextField *usernameField = [SLTextField elementWithAccessibilityIdentifier:AX_USERNAME_TEXTFIELD];", 
-                        "abbr_hash": "47ff00a8", 
+                        "last_modified_date": "2014-08-06 13:23:51 -0700", 
+                        "line_content": "187)    SLWaitUntilTrue([secondHandler didHandleAlert], DEFAULT_LONG_TIMEOUT);", 
+                        "abbr_hash": "dc9e7cad", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 187
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "188)    __block BOOL flag = NO;", 
+                        "line_content": "188)", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 188
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "189)    [usernameField examineMatchingObject:^(NSObject *object) {", 
+                        "line_content": "189)    __block BOOL flag = NO;", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 189
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "190)        UITextField *textField = (UITextField *)object;", 
+                        "line_content": "190)    [usernameField examineMatchingObject:^(NSObject *object) {", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 190
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "191)        flag = [textField.text isEqualToString:@\"@4153506221\"];", 
+                        "line_content": "191)        UITextField *textField = (UITextField *)object;", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 191
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "192)    }];", 
+                        "line_content": "192)        flag = [textField.text isEqualToString:@\"@4153506221\"];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 192
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "193)    SLAssertTrue(flag, @\"Pressing Username doesn't add '@' prefix\");", 
+                        "line_content": "193)    }];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 193
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "194)}", 
+                        "line_content": "194)    SLAssertTrue(flag, @\"Pressing Username doesn't add '@' prefix\");", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 194
+                    }, 
+                    {
+                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
+                        "line_content": "195)}", 
+                        "abbr_hash": "47ff00a8", 
+                        "last_modifier_email": "btirca@twitter.com", 
+                        "line_num": 195
                     }
                 ], 
                 "created_commit_log": "commit 47ff00a84b69d54144c1f84bf2c4727a760fba4e\nAuthor: Bogdan Tirca <btirca@twitter.com>\nDate:   Mon Jul 14 14:12:16 2014 -0700\n\n    New login method: auth/1/xauth_password.json\n    \n    Add the new login method into experiment\n    \n    Handle new login method:\n    \tlogin with phone number\n    \tbefore login, do guest authentification\n    \thandle errors\n    \tscribe events\n    Testing\n    \tunit test\n    \tUI Automation test\n    \n    Change error message when there is no Internet connection JIRA: IOS-17375\n    \n    JIRA: GTE-820\n    \n    Change-Id: I5b037652d25779c2fd7df9f051316d87e13793fa\n", 
                 "created_by": "btirca@twitter.com", 
-                "modified_in": "47ff00a8", 
-                "modified_commit_log": "commit 47ff00a84b69d54144c1f84bf2c4727a760fba4e\nAuthor: Bogdan Tirca <btirca@twitter.com>\nDate:   Mon Jul 14 14:12:16 2014 -0700\n\n    New login method: auth/1/xauth_password.json\n    \n    Add the new login method into experiment\n    \n    Handle new login method:\n    \tlogin with phone number\n    \tbefore login, do guest authentification\n    \thandle errors\n    \tscribe events\n    Testing\n    \tunit test\n    \tUI Automation test\n    \n    Change error message when there is no Internet connection JIRA: IOS-17375\n    \n    JIRA: GTE-820\n    \n    Change-Id: I5b037652d25779c2fd7df9f051316d87e13793fa\n", 
+                "modified_in": "dc9e7cad", 
+                "modified_commit_log": "commit dc9e7cada7a7f75ff07b80fe17c287bd2831dc9b\nAuthor: Bogdan Tirca <btirca@twitter.com>\nDate:   Wed Aug 6 13:23:51 2014 -0700\n\n    Fix UI Automation tests\n    \n    Fix 'testAmbiguousErrorChoosePhoneNumber' and 'testAmbiguousErrorChooseUsername' not passing on remote machine.\n    \n    JIRA: GTE-1288\n    \n    Change-Id: Ie08635f7a6df1f0a346516792ec22e7981a6df12\n", 
                 "created_in": "47ff00a8", 
                 "modified_by": "btirca@twitter.com"
             }, 
             "testAmbiguousErrorChoosePhoneNumber": {
-                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/43789/", 
+                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/45465/", 
                 "created_gerrit_link": "https://gerrit.twitter.biz/#/c/43789/", 
                 "name": "testAmbiguousErrorChoosePhoneNumber", 
                 "contributors": [
                     "btirca@twitter.com"
                 ], 
-                "modified_at": "2014-07-14 14:12:16 -0700", 
+                "modified_at": "2014-08-06 13:23:51 -0700", 
                 "created_at": "2014-07-14 14:12:16 -0700", 
                 "lines": [
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "150)- (void)testAmbiguousErrorChoosePhoneNumber", 
-                        "abbr_hash": "47ff00a8", 
-                        "last_modifier_email": "btirca@twitter.com", 
-                        "line_num": 150
-                    }, 
-                    {
-                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "151){", 
+                        "line_content": "151)- (void)testAmbiguousErrorChoosePhoneNumber", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 151
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "152)    [self _testInsertCredentialsWithUsername:@\"4153506221\" password:@\"bad_bad_bad\"];", 
+                        "line_content": "152){", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 152
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "153)", 
+                        "line_content": "153)    [self _testInsertCredentialsWithUsername:@\"4153506221\" password:@\"bad_bad_bad\"];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 153
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "154)    SLButton *signInButton = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_SIGN_IN_ACTION_ACCESSIBILITY_LABEL];", 
+                        "line_content": "154)", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 154
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "155)", 
+                        "line_content": "155)    SLButton *signInButton = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_SIGN_IN_ACTION_ACCESSIBILITY_LABEL];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 155
                     }, 
                     {
-                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "156)    [self setHandlerForAlertTitled:LOCALIZABLE_PHONE_OR_USERNAME_ALERT_TITLE byDismissingButtonTitled:LOCALIZABLE_PHONE_NUMBER_ACTION_LABEL];", 
-                        "abbr_hash": "47ff00a8", 
+                        "last_modified_date": "2014-08-06 13:23:51 -0700", 
+                        "line_content": "156)    SLTextField *usernameField = [SLTextField elementWithAccessibilityIdentifier:AX_USERNAME_TEXTFIELD];", 
+                        "abbr_hash": "dc9e7cad", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 156
                     }, 
@@ -10325,7 +10333,7 @@
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "158)    [self setHandlerForAlertTitled:LOCALIZABLE_ACCOUNT_AUTHENTICATION_FAILED_ERROR_ALERT_TITLE byDismissingButtonTitled:LOCALIZABLE_OK_ACTION_LABEL];", 
+                        "line_content": "158)    [self setHandlerForAlertTitled:LOCALIZABLE_PHONE_OR_USERNAME_ALERT_TITLE byDismissingButtonTitled:LOCALIZABLE_PHONE_NUMBER_ACTION_LABEL];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 158
@@ -10338,9 +10346,9 @@
                         "line_num": 159
                     }, 
                     {
-                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "160)    [UIAElement(signInButton) tap];", 
-                        "abbr_hash": "47ff00a8", 
+                        "last_modified_date": "2014-08-06 13:23:51 -0700", 
+                        "line_content": "160)    SLAlertHandler *secondHandler = [self setHandlerForAlertTitled:LOCALIZABLE_ACCOUNT_AUTHENTICATION_FAILED_ERROR_ALERT_TITLE byDismissingButtonTitled:LOCALIZABLE_OK_ACTION_LABEL];", 
+                        "abbr_hash": "dc9e7cad", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 160
                     }, 
@@ -10353,7 +10361,7 @@
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "162)    [self wait:1.0];", 
+                        "line_content": "162)    [UIAElement(signInButton) tap];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 162
@@ -10366,77 +10374,84 @@
                         "line_num": 163
                     }, 
                     {
-                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "164)    SLTextField *phoneNumberField = [SLTextField elementWithAccessibilityIdentifier:AX_USERNAME_TEXTFIELD];", 
-                        "abbr_hash": "47ff00a8", 
+                        "last_modified_date": "2014-08-06 13:23:51 -0700", 
+                        "line_content": "164)    SLWaitUntilTrue([secondHandler didHandleAlert], DEFAULT_LONG_TIMEOUT);", 
+                        "abbr_hash": "dc9e7cad", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 164
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "165)    __block BOOL flag = NO;", 
+                        "line_content": "165)", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 165
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "166)    [phoneNumberField examineMatchingObject:^(NSObject *object) {", 
+                        "line_content": "166)    __block BOOL flag = NO;", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 166
                     }, 
                     {
-                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "167)        UITextField *textField = (UITextField *)object;", 
-                        "abbr_hash": "47ff00a8", 
+                        "last_modified_date": "2014-08-06 13:23:51 -0700", 
+                        "line_content": "167)    [usernameField examineMatchingObject:^(NSObject *object) {", 
+                        "abbr_hash": "dc9e7cad", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 167
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "168)        flag = [textField.text isEqualToString:@\"+4153506221\"];", 
+                        "line_content": "168)        UITextField *textField = (UITextField *)object;", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 168
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "169)    }];", 
+                        "line_content": "169)        flag = [textField.text isEqualToString:@\"+4153506221\"];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 169
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "170)    SLAssertTrue(flag, @\"Pressing phone number doesn't add '+' prefix\");", 
+                        "line_content": "170)    }];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 170
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "171)}", 
+                        "line_content": "171)    SLAssertTrue(flag, @\"Pressing phone number doesn't add '+' prefix\");", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 171
+                    }, 
+                    {
+                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
+                        "line_content": "172)}", 
+                        "abbr_hash": "47ff00a8", 
+                        "last_modifier_email": "btirca@twitter.com", 
+                        "line_num": 172
                     }
                 ], 
                 "created_commit_log": "commit 47ff00a84b69d54144c1f84bf2c4727a760fba4e\nAuthor: Bogdan Tirca <btirca@twitter.com>\nDate:   Mon Jul 14 14:12:16 2014 -0700\n\n    New login method: auth/1/xauth_password.json\n    \n    Add the new login method into experiment\n    \n    Handle new login method:\n    \tlogin with phone number\n    \tbefore login, do guest authentification\n    \thandle errors\n    \tscribe events\n    Testing\n    \tunit test\n    \tUI Automation test\n    \n    Change error message when there is no Internet connection JIRA: IOS-17375\n    \n    JIRA: GTE-820\n    \n    Change-Id: I5b037652d25779c2fd7df9f051316d87e13793fa\n", 
                 "created_by": "btirca@twitter.com", 
-                "modified_in": "47ff00a8", 
-                "modified_commit_log": "commit 47ff00a84b69d54144c1f84bf2c4727a760fba4e\nAuthor: Bogdan Tirca <btirca@twitter.com>\nDate:   Mon Jul 14 14:12:16 2014 -0700\n\n    New login method: auth/1/xauth_password.json\n    \n    Add the new login method into experiment\n    \n    Handle new login method:\n    \tlogin with phone number\n    \tbefore login, do guest authentification\n    \thandle errors\n    \tscribe events\n    Testing\n    \tunit test\n    \tUI Automation test\n    \n    Change error message when there is no Internet connection JIRA: IOS-17375\n    \n    JIRA: GTE-820\n    \n    Change-Id: I5b037652d25779c2fd7df9f051316d87e13793fa\n", 
+                "modified_in": "dc9e7cad", 
+                "modified_commit_log": "commit dc9e7cada7a7f75ff07b80fe17c287bd2831dc9b\nAuthor: Bogdan Tirca <btirca@twitter.com>\nDate:   Wed Aug 6 13:23:51 2014 -0700\n\n    Fix UI Automation tests\n    \n    Fix 'testAmbiguousErrorChoosePhoneNumber' and 'testAmbiguousErrorChooseUsername' not passing on remote machine.\n    \n    JIRA: GTE-1288\n    \n    Change-Id: Ie08635f7a6df1f0a346516792ec22e7981a6df12\n", 
                 "created_in": "47ff00a8", 
                 "modified_by": "btirca@twitter.com"
             }, 
             "testAmbiguousErrorChooseCancel": {
-                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/43789/", 
+                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/45465/", 
                 "created_gerrit_link": "https://gerrit.twitter.biz/#/c/43789/", 
                 "name": "testAmbiguousErrorChooseCancel", 
                 "contributors": [
                     "btirca@twitter.com"
                 ], 
-                "modified_at": "2014-07-14 14:12:16 -0700", 
+                "modified_at": "2014-08-06 13:23:51 -0700", 
                 "created_at": "2014-07-14 14:12:16 -0700", 
                 "lines": [
                     {
@@ -10475,36 +10490,36 @@
                         "line_num": 134
                     }, 
                     {
-                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "135)    [self handleAlertTitled:LOCALIZABLE_PHONE_OR_USERNAME_ALERT_TITLE byDismissingButtonTitled:LOCALIZABLE_CANCEL_ACTION_LABEL generatedByActions:^{", 
-                        "abbr_hash": "47ff00a8", 
+                        "last_modified_date": "2014-08-06 13:23:51 -0700", 
+                        "line_content": "135)    SLTextField *usernameField = [SLTextField elementWithAccessibilityIdentifier:AX_USERNAME_TEXTFIELD];", 
+                        "abbr_hash": "dc9e7cad", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 135
                     }, 
                     {
-                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "136)        [UIAElement(signInButton) tap];", 
-                        "abbr_hash": "47ff00a8", 
+                        "last_modified_date": "2014-08-06 13:23:51 -0700", 
+                        "line_content": "136)", 
+                        "abbr_hash": "dc9e7cad", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 136
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "137)    } withTimeout:10.0];", 
+                        "line_content": "137)    [self handleAlertTitled:LOCALIZABLE_PHONE_OR_USERNAME_ALERT_TITLE byDismissingButtonTitled:LOCALIZABLE_CANCEL_ACTION_LABEL generatedByActions:^{", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 137
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "138)", 
+                        "line_content": "138)        [UIAElement(signInButton) tap];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 138
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "139)    [self wait:1.0];", 
+                        "line_content": "139)    } withTimeout:10.0];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 139
@@ -10518,65 +10533,72 @@
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "141)    SLTextField *usernameField = [SLTextField elementWithAccessibilityIdentifier:AX_USERNAME_TEXTFIELD];", 
+                        "line_content": "141)    [self wait:1.0];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 141
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "142)    __block BOOL flag = NO;", 
+                        "line_content": "142)", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 142
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "143)    [usernameField examineMatchingObject:^(NSObject *object) {", 
+                        "line_content": "143)    __block BOOL flag = NO;", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 143
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "144)        UITextField *textField = (UITextField *)object;", 
+                        "line_content": "144)    [usernameField examineMatchingObject:^(NSObject *object) {", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 144
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "145)        flag = [textField.text isEqualToString:@\"4153506221\"];", 
+                        "line_content": "145)        UITextField *textField = (UITextField *)object;", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 145
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "146)    }];", 
+                        "line_content": "146)        flag = [textField.text isEqualToString:@\"4153506221\"];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 146
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "147)    SLAssertTrue(flag, @\"cancel changed username field\");", 
+                        "line_content": "147)    }];", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 147
                     }, 
                     {
                         "last_modified_date": "2014-07-14 14:12:16 -0700", 
-                        "line_content": "148)}", 
+                        "line_content": "148)    SLAssertTrue(flag, @\"cancel changed username field\");", 
                         "abbr_hash": "47ff00a8", 
                         "last_modifier_email": "btirca@twitter.com", 
                         "line_num": 148
+                    }, 
+                    {
+                        "last_modified_date": "2014-07-14 14:12:16 -0700", 
+                        "line_content": "149)}", 
+                        "abbr_hash": "47ff00a8", 
+                        "last_modifier_email": "btirca@twitter.com", 
+                        "line_num": 149
                     }
                 ], 
                 "created_commit_log": "commit 47ff00a84b69d54144c1f84bf2c4727a760fba4e\nAuthor: Bogdan Tirca <btirca@twitter.com>\nDate:   Mon Jul 14 14:12:16 2014 -0700\n\n    New login method: auth/1/xauth_password.json\n    \n    Add the new login method into experiment\n    \n    Handle new login method:\n    \tlogin with phone number\n    \tbefore login, do guest authentification\n    \thandle errors\n    \tscribe events\n    Testing\n    \tunit test\n    \tUI Automation test\n    \n    Change error message when there is no Internet connection JIRA: IOS-17375\n    \n    JIRA: GTE-820\n    \n    Change-Id: I5b037652d25779c2fd7df9f051316d87e13793fa\n", 
                 "created_by": "btirca@twitter.com", 
-                "modified_in": "47ff00a8", 
-                "modified_commit_log": "commit 47ff00a84b69d54144c1f84bf2c4727a760fba4e\nAuthor: Bogdan Tirca <btirca@twitter.com>\nDate:   Mon Jul 14 14:12:16 2014 -0700\n\n    New login method: auth/1/xauth_password.json\n    \n    Add the new login method into experiment\n    \n    Handle new login method:\n    \tlogin with phone number\n    \tbefore login, do guest authentification\n    \thandle errors\n    \tscribe events\n    Testing\n    \tunit test\n    \tUI Automation test\n    \n    Change error message when there is no Internet connection JIRA: IOS-17375\n    \n    JIRA: GTE-820\n    \n    Change-Id: I5b037652d25779c2fd7df9f051316d87e13793fa\n", 
+                "modified_in": "dc9e7cad", 
+                "modified_commit_log": "commit dc9e7cada7a7f75ff07b80fe17c287bd2831dc9b\nAuthor: Bogdan Tirca <btirca@twitter.com>\nDate:   Wed Aug 6 13:23:51 2014 -0700\n\n    Fix UI Automation tests\n    \n    Fix 'testAmbiguousErrorChoosePhoneNumber' and 'testAmbiguousErrorChooseUsername' not passing on remote machine.\n    \n    JIRA: GTE-1288\n    \n    Change-Id: Ie08635f7a6df1f0a346516792ec22e7981a6df12\n", 
                 "created_in": "47ff00a8", 
                 "modified_by": "btirca@twitter.com"
             }, 
@@ -12605,13 +12627,14 @@
                 "modified_by": "jgary@twitter.com"
             }, 
             "testRetweetEngagement": {
-                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/42612/", 
+                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/45470/", 
                 "created_gerrit_link": "https://gerrit.twitter.biz/#/c/42612/", 
                 "name": "testRetweetEngagement", 
                 "contributors": [
-                    "jgary@twitter.com"
+                    "jgary@twitter.com", 
+                    "spanage@twitter.com"
                 ], 
-                "modified_at": "2014-06-28 18:50:28 -0700", 
+                "modified_at": "2014-08-05 16:03:23 -0700", 
                 "created_at": "2014-06-28 18:50:28 -0700", 
                 "lines": [
                     {
@@ -12685,10 +12708,10 @@
                         "line_num": 115
                     }, 
                     {
-                        "last_modified_date": "2014-06-28 18:50:28 -0700", 
-                        "line_content": "116)            retweetActionSheet = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_RETWEET_ACTION_LABEL];", 
-                        "abbr_hash": "904d0d15", 
-                        "last_modifier_email": "jgary@twitter.com", 
+                        "last_modified_date": "2014-08-05 16:03:23 -0700", 
+                        "line_content": "116)            retweetActionSheet = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_RETWEET_ACTION_ACCESSIBILITY_LABEL];", 
+                        "abbr_hash": "e1bba5e8", 
+                        "last_modifier_email": "spanage@twitter.com", 
                         "line_num": 116
                     }, 
                     {
@@ -12750,10 +12773,10 @@
                 ], 
                 "created_commit_log": "commit 904d0d15560702df9fd0cbcc11fdd0bd39a1f628\nAuthor: Jon Gary <jgary@twitter.com>\nDate:   Sat Jun 28 18:50:28 2014 -0700\n\n    First set of adserv UI Automation test cases.\n    \n    Adserv test cases are similar to Echidna test cases but instead of\n    testing scribe logging they test promoted content logging, e.g. testing\n    that impressions and engagements for promoted tweets are recorded.\n    Details at go/adservfaux.\n    \n    This is the first batch of tests that focus on testing some engagements\n    on promoted tweets in the timeline.\n    \n    jgary: some refactoring to reduce replicated code.\n    \n    Change-Id: I69a93a01934f23bcf33141292c3066403ca0b864\n", 
                 "created_by": "jgary@twitter.com", 
-                "modified_in": "904d0d15", 
-                "modified_commit_log": "commit 904d0d15560702df9fd0cbcc11fdd0bd39a1f628\nAuthor: Jon Gary <jgary@twitter.com>\nDate:   Sat Jun 28 18:50:28 2014 -0700\n\n    First set of adserv UI Automation test cases.\n    \n    Adserv test cases are similar to Echidna test cases but instead of\n    testing scribe logging they test promoted content logging, e.g. testing\n    that impressions and engagements for promoted tweets are recorded.\n    Details at go/adservfaux.\n    \n    This is the first batch of tests that focus on testing some engagements\n    on promoted tweets in the timeline.\n    \n    jgary: some refactoring to reduce replicated code.\n    \n    Change-Id: I69a93a01934f23bcf33141292c3066403ca0b864\n", 
+                "modified_in": "e1bba5e8", 
+                "modified_commit_log": "commit e1bba5e84c57eebba7d428b2204958523dcc9cec\nAuthor: Sommer Panage <spanage@twitter.com>\nDate:   Tue Aug 5 16:03:23 2014 -0700\n\n    AX: Round 1 of great accessibility strings cleanup\n    \n    Details can be found here:\n    https://confluence.twitter.biz/display/MOBILE/Accessibility+String+Cleanup+Proposal\n    \n    The round mostly deals with \"abnormal\" cases that are\n    difficult to scirpt -- strings assigned via long code\n    paths, etc. In many cases we create a duplicate AX\n    string for various standard actions to help prevent common\n    bugs due to misuse of standard strings for AX strings and vice\n    versa.\n    \n    Jira: MAX-293\n    Change-Id: I86fa0ce65feebb68332c40cbf9474c253f57e8c8\n", 
                 "created_in": "904d0d15", 
-                "modified_by": "jgary@twitter.com"
+                "modified_by": "spanage@twitter.com"
             }, 
             "testReplyEngagement": {
                 "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/42612/", 
@@ -23989,16 +24012,139 @@
         "name": "STVideoBeaconTest", 
         "contributors": []
     }, 
-    "STTweetEngagementEchidnaTest": {
+    "STProfileEchidnaTest": {
         "test_cases": {
-            "testHomeTweetTweetRetweet": {
-                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/44087/", 
-                "created_gerrit_link": "https://gerrit.twitter.biz/#/c/44087/", 
-                "name": "testHomeTweetTweetRetweet", 
+            "testProfileOpenLink": {
+                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/45556/", 
+                "created_gerrit_link": "https://gerrit.twitter.biz/#/c/45556/", 
+                "name": "testProfileOpenLink", 
                 "contributors": [
                     "ibogdanescu@twitter.com"
                 ], 
-                "modified_at": "2014-07-22 11:20:57 -0700", 
+                "modified_at": "2014-08-07 16:11:03 -0700", 
+                "created_at": "2014-08-07 16:11:03 -0700", 
+                "lines": [
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "39)- (void)testProfileOpenLink", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 39
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "40){", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 40
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "41)    NSString *url = @\"google.com\";", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 41
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "42)    NSString *timestamp = [self appSendTimestampedTweet:url];", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 42
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "43)    NSString *tweetID = [self idOfTweetWithTimestamp:timestamp];", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 43
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "44)    [self switchToAccountWithUsername:kUser1Username];", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 44
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "45)    [self openProfileForUsername:kUser2Username];", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 45
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "46)    STTweetCell *tweetCell = [STTweetCell tweetCellWithID:tweetID];", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 46
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "47)    [self runEchidnaTest:@\"profile-open-link\" suite:kTweetProfileTestSuite actions:^{", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 47
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "48)        [tweetCell tapBodyText];", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 48
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "49)        [self wait:DEFAULT_TIMEOUT];", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 49
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "50)        [self goToHomeTimeline];", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 50
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "51)    }];", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 51
+                    }, 
+                    {
+                        "last_modified_date": "2014-08-07 16:11:03 -0700", 
+                        "line_content": "52)}", 
+                        "abbr_hash": "014b3840", 
+                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "line_num": 52
+                    }
+                ], 
+                "created_commit_log": "commit 014b38408fc5f6910626ec7bf356d35c21529c82\nAuthor: Ionut Bogdanescu <ibogdanescu@twitter.com>\nDate:   Thu Aug 7 16:11:03 2014 -0700\n\n    Echidna UIAutomation for Profile Open Link\n    \n    Added the UIAutomation for the Echidna test added here:\n    https://reviewboard.twitter.biz/r/417461/\n    \n    Change-Id: I3d79e621de6e96dc45c51ffc91a4c5e987d5a0ad\n    JIRA: VIRALITY-1713\n", 
+                "created_by": "ibogdanescu@twitter.com", 
+                "modified_in": "014b3840", 
+                "modified_commit_log": "commit 014b38408fc5f6910626ec7bf356d35c21529c82\nAuthor: Ionut Bogdanescu <ibogdanescu@twitter.com>\nDate:   Thu Aug 7 16:11:03 2014 -0700\n\n    Echidna UIAutomation for Profile Open Link\n    \n    Added the UIAutomation for the Echidna test added here:\n    https://reviewboard.twitter.biz/r/417461/\n    \n    Change-Id: I3d79e621de6e96dc45c51ffc91a4c5e987d5a0ad\n    JIRA: VIRALITY-1713\n", 
+                "created_in": "014b3840", 
+                "modified_by": "ibogdanescu@twitter.com"
+            }
+        }, 
+        "name": "STProfileEchidnaTest", 
+        "contributors": []
+    }, 
+    "STTweetEngagementEchidnaTest": {
+        "test_cases": {
+            "testHomeTweetTweetRetweet": {
+                "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/45470/", 
+                "created_gerrit_link": "https://gerrit.twitter.biz/#/c/44087/", 
+                "name": "testHomeTweetTweetRetweet", 
+                "contributors": [
+                    "ibogdanescu@twitter.com", 
+                    "spanage@twitter.com"
+                ], 
+                "modified_at": "2014-08-05 16:03:23 -0700", 
                 "created_at": "2014-07-22 11:20:57 -0700", 
                 "lines": [
                     {
@@ -24058,10 +24204,10 @@
                         "line_num": 85
                     }, 
                     {
-                        "last_modified_date": "2014-07-22 11:20:57 -0700", 
-                        "line_content": "86)        SLButton *retweetActionSheet = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_RETWEET_ACTION_LABEL];", 
-                        "abbr_hash": "b2f23424", 
-                        "last_modifier_email": "ibogdanescu@twitter.com", 
+                        "last_modified_date": "2014-08-05 16:03:23 -0700", 
+                        "line_content": "86)        SLButton *retweetActionSheet = [SLButton elementWithAccessibilityLabel:LOCALIZABLE_RETWEET_ACTION_ACCESSIBILITY_LABEL];", 
+                        "abbr_hash": "e1bba5e8", 
+                        "last_modifier_email": "spanage@twitter.com", 
                         "line_num": 86
                     }, 
                     {
@@ -24095,10 +24241,10 @@
                 ], 
                 "created_commit_log": "commit b2f23424a084c0f9a526ad275239985bc5e497a0\nAuthor: ibogdanescu <ibogdanescu@twitter.com>\nDate:   Tue Jul 22 11:20:57 2014 -0700\n\n    Add Echidna UIAutomation Tests for Tweet Engagement for the home timeline\n    \n    UIAutomation for the things done here:\n    https://reviewboard.twitter.biz/r/404163/\n    \n    Change-Id: I6456bd6ea8de521e5be530fa470adc8e28035024\n    JIRA: ANATOMY-983\n", 
                 "created_by": "ibogdanescu@twitter.com", 
-                "modified_in": "b2f23424", 
-                "modified_commit_log": "commit b2f23424a084c0f9a526ad275239985bc5e497a0\nAuthor: ibogdanescu <ibogdanescu@twitter.com>\nDate:   Tue Jul 22 11:20:57 2014 -0700\n\n    Add Echidna UIAutomation Tests for Tweet Engagement for the home timeline\n    \n    UIAutomation for the things done here:\n    https://reviewboard.twitter.biz/r/404163/\n    \n    Change-Id: I6456bd6ea8de521e5be530fa470adc8e28035024\n    JIRA: ANATOMY-983\n", 
+                "modified_in": "e1bba5e8", 
+                "modified_commit_log": "commit e1bba5e84c57eebba7d428b2204958523dcc9cec\nAuthor: Sommer Panage <spanage@twitter.com>\nDate:   Tue Aug 5 16:03:23 2014 -0700\n\n    AX: Round 1 of great accessibility strings cleanup\n    \n    Details can be found here:\n    https://confluence.twitter.biz/display/MOBILE/Accessibility+String+Cleanup+Proposal\n    \n    The round mostly deals with \"abnormal\" cases that are\n    difficult to scirpt -- strings assigned via long code\n    paths, etc. In many cases we create a duplicate AX\n    string for various standard actions to help prevent common\n    bugs due to misuse of standard strings for AX strings and vice\n    versa.\n    \n    Jira: MAX-293\n    Change-Id: I86fa0ce65feebb68332c40cbf9474c253f57e8c8\n", 
                 "created_in": "b2f23424", 
-                "modified_by": "ibogdanescu@twitter.com"
+                "modified_by": "spanage@twitter.com"
             }, 
             "testHomeOpenLink": {
                 "modified_gerrit_link": "https://gerrit.twitter.biz/#/c/44087/", 

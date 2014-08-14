@@ -1,14 +1,14 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <title>mLeaderboard_tree</title>
-    <link type="text/css" rel="stylesheet" href="css/style.css"/>
-    <script type="text/javascript" src="d3/d3.js"></script>
-    <script type="text/javascript" src="d3/d3.layout.js"></script>
-    <script src="./js/operData.js"></script>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/2.2.0/css/bootstrap.css" rel="stylesheet">
+    <link href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css" rel="stylesheet">
+    <link href="./css/style.css" type="text/css" rel="stylesheet"/>
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -25,22 +25,295 @@
           padding-right: 5px;
         }
       }
-      .node circle {
-        cursor: pointer;
-        fill: #fff;
-        stroke: steelblue;
-        stroke-width: 1.5px;
-      }
-      .node text {
-        font-size: 11px;
-      }
-      path.link {
-        fill: none;
-        stroke: #ccc;
-        stroke-width: 1.5px;
-      }
     </style>
+    <script type="text/javascript" src="./d3/d3.js"></script>
+    <script type="text/javascript" src="./d3/d3.layout.js"></script>
+    <script src="./js/operData.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script type="text/javascript">
+    // Global variables
+    var m, w, h, i;
+    var availableContr = [];
+    var root = {};
+    var tree;
+    var diagonal;
+    var vis;
 
+    function loadJSONDoc() {
+      var xmlhttp=new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+          autoComplete();
+          var txt = xmlhttp.responseText;
+          var obj = JSON.parse(txt);
+          populate(obj, putContr);
+          availableContr = [];
+        }
+      }
+
+      if (!window.location.search) {
+        var errMsg = "<h2>oops!</h2>";
+        errMsg = errMsg + "<ul class='nav nav-pills'>";
+        errMsg = errMsg + "<li id = 'ios'><a href='boardTree.html?ios'>ios</a></li>";
+        errMsg = errMsg + "<li id = 'android'><a href='boardTree.html?android'>android</a></li></ul>";
+        document.getElementById("content").innerHTML = errMsg;
+        return;
+      }
+      var putContr = "";
+      var contr = "";
+      var input = document.getElementById("inputid");
+      if (input) {
+        contr = input.value;
+      }
+      if (contr != "") {
+        window.location.href = window.location.pathname + window.location.search + "#" + contr;
+      }
+      putContr = window.location.hash.substring(1);
+
+      var os = window.location.search.substring(1);
+      var url;
+      document.getElementById(os).className = "active";
+      document.getElementById("boardchart").href = "boardChart.html?" + os;
+      document.getElementById("boardtable").href = "boardTable.html?" + os;
+      document.getElementById("boardtree").href = "boardTree.html?" + os;
+      url = "json/" + os + "/testsuites.json";
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+    }
+
+    // Set the global Variables
+    function setValues() {
+      // Clear the previous content of body-left
+      document.getElementById("body-left").innerHTML = "";
+      m = [20, 120, 20, 120];
+      w = 1280 - m[1] - m[3];
+      h = 500 - m[0] - m[2];
+      i = 0;
+      availableContr = [];
+      root = {};
+      tree = d3.layout.tree()
+        .size([h, w]);
+      diagonal = d3.svg.diagonal()
+        .projection(function(d) { return [d.y, d.x]; });
+      vis = d3.select("#body-left").append("svg:svg")
+        .attr("width", w + m[1] + m[3])
+        .attr("height", h + m[0] + m[2])
+        .append("svg:g")
+        .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+    }
+
+    // Get the data and construct a data structure, create a tree to show
+    function populate(testResults, contr) {
+      // Create an array to save each contributor with his/her testcase and testsuite
+      var arr = [];
+      arr = populateResults(testResults);
+      // Update the availableContr for auto complete
+      for (var j = 0; j < arr.length; j++) {
+        availableContr.push(arr[j].contr);
+      }
+      // Create new data structure
+      if (contr) {
+        setValues();
+        var indx = createRoot(arr, contr, root);
+        if (indx === -1) {
+          // If no such contributor, show error message
+          showWarning();
+        }
+        else {
+          // Else show a tree on the left
+          update(root);
+          // Show a table on the right
+          showInfo(arr, indx);
+        }
+      }
+    }
+
+    function autoComplete() {
+      // JQuery for auto complete
+      $(function() {
+        $( "#inputid" ).autocomplete({
+          source: availableContr
+        });
+      });
+    }
+
+    // this part refers to http://mbostock.github.io/d3/talk/20111018/tree.html
+    function update(source) {
+      var duration = d3.event && d3.event.altKey ? 5000 : 500;
+
+      // Compute the new tree layout.
+      var nodes = tree.nodes(root).reverse();
+
+      // Normalize for fixed-depth.
+      nodes.forEach(function(d) { d.y = d.depth * 180; });
+
+      // Update the nodes…
+      var node = vis.selectAll("g.node")
+          .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+      // Enter any new nodes at the parent's previous position.
+      var nodeEnter = node.enter().append("svg:g")
+          .attr("class", "node")
+          .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+          .on("click", function(d) { toggle(d); update(d); });
+
+      nodeEnter.append("svg:circle")
+          .attr("r", 1e-6)
+          .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
+      nodeEnter.append("svg:text")
+          .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+          .attr("dy", ".35em")
+          .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+          .text(function(d) { return d.name; })
+          .style("fill-opacity", 1e-6);
+
+      // Transition nodes to their new position.
+      var nodeUpdate = node.transition()
+          .duration(duration)
+          .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+      nodeUpdate.select("circle")
+          .attr("r", 4.5)
+          .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
+      nodeUpdate.select("text")
+          .style("fill-opacity", 1);
+
+      // Transition exiting nodes to the parent's new position.
+      var nodeExit = node.exit().transition()
+          .duration(duration)
+          .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+          .remove();
+
+      nodeExit.select("circle")
+          .attr("r", 1e-6);
+
+      nodeExit.select("text")
+          .style("fill-opacity", 1e-6);
+
+      // Update the links…
+      var link = vis.selectAll("path.link")
+          .data(tree.links(nodes), function(d) { return d.target.id; });
+
+      // Enter any new links at the parent's previous position.
+      link.enter().insert("svg:path", "g")
+          .attr("class", "link")
+          .attr("d", function(d) {
+            var o = {x: source.x0, y: source.y0};
+            return diagonal({source: o, target: o});
+          })
+        .transition()
+          .duration(duration)
+          .attr("d", diagonal);
+
+      // Transition links to their new position.
+      link.transition()
+          .duration(duration)
+          .attr("d", diagonal);
+
+      // Transition exiting nodes to the parent's new position.
+      link.exit().transition()
+          .duration(duration)
+          .attr("d", function(d) {
+            var o = {x: source.x, y: source.y};
+            return diagonal({source: o, target: o});
+          })
+          .remove();
+
+      // Stash the old positions for transition.
+      nodes.forEach(function(d) {
+        d.x0 = d.x;
+        d.y0 = d.y;
+      });
+    }
+
+    // Reconstruct for tree -- create new data structure called root
+    function createRoot(arr, contr, root) {
+      var indx = -1;
+      // New href for parsing for ios/android and contributor
+      window.location.href = window.location.pathname + window.location.search + "#" + contr;
+      root.name = contr;
+      var testSuite = [];
+
+      arr.forEach(function(value1, j) {
+        if (value1.contr === contr) {
+          indx = j;
+          value1.levelCase.forEach(function(value2) {
+            var childRoot = {};
+            var lenSuite = (value2.suite).length - 1;
+            if (window.location.search === "?android") {
+              childRoot.name = (value2.suite).substr(29, lenSuite);
+            }
+            else {
+              childRoot.name = value2.suite;
+            }
+            var testCase = [];
+            value2.case.forEach(function(value3) {
+              var grandChildRoot = {};
+              var lenCase = value3.length - 1;
+              grandChildRoot.name = value3.substr(lenSuite + 2,lenCase);
+              testCase.push(grandChildRoot);
+            });
+            childRoot.children = testCase;
+            testSuite.push(childRoot);
+          });
+        }
+      });
+
+      root.children = testSuite;
+      root.x0 = h / 2;
+      root.y0 = 0;
+
+      function toggleAll(d) {
+        if (d.children) {
+          d.children.forEach(toggleAll);
+          toggle(d);
+        }
+      }
+      if (indx === -1) {
+        return indx;
+      }
+      // Initialize the display to show a few nodes.
+      root.children.forEach(toggleAll);
+      toggle(root.children[0]);
+      return indx;
+    }
+
+    // Toggle children.
+    function toggle(d) {
+      if (d.children) {
+        d._children = d.children;
+        d.children = null;
+      } else {
+        d.children = d._children;
+        d._children = null;
+      }
+    }
+
+    // Show contributor's test info
+    function showInfo(arr, indx) {
+      var strMsg = "<div class='alert alert-success' role='alter'><strong>Success! </strong>" + "Here it is." + "</div>";
+      document.getElementById("msg").innerHTML = strMsg;
+      var str = "<table class='table table-bordered'>";
+      str = str + ("<tr><td>contributor</td><td>" + arr[indx].contr + "</td><tr>");
+      str = str + ("<tr><td>test suite#</td><td>" + arr[indx].testSuiteCount + "</td><tr>");
+      str = str + ("<tr><td>test case#</td><td>" + arr[indx].testCaseCount + "</td><tr></table>");
+      document.getElementById("body-right").innerHTML = str;
+    }
+
+    // Show error message
+    function showWarning() {
+      var str = "<div class='alert alert-warning' role='alter'><strong>Warning! </strong>" + "No such contributor." + "</div>";
+      document.getElementById("msg").innerHTML = str;
+    }
+
+    // Show tree on load
+    addEventListener("load", function () {
+      loadJSONDoc();
+    });
+    </script>
   </head>
 
   <body>
@@ -54,200 +327,38 @@
           </button>
           <a class="brand" href="./boardChart.html">mLeaderboard</a>
           <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a>
-            </p>
             <ul class="nav">
-              <li><a href="./boardChart.html">Chart</a></li>
-              <li><a href="./boardTable.html">Table</a></li>
-              <li class="active"><a href="./boardTree.html">Tree</a></li>
+              <li><a href="./boardChart.html" id="boardchart">Chart</a></li>
+              <li><a href="./boardTable.html" id="boardtable">Table</a></li>
+              <li class="active"><a href="./boardTree.html" id="boardtree">Tree</a></li>
+            </ul>
+            <ul class="nav pull-right">
+              <li id = "ios"><a href="boardTree.html?ios">ios</a></li>
+              <li id = "android"><a href="boardTree.html?android">android</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container-fluid">
-      Contributor's Email: <input type = "text" id = "inputid" onkeydown="if (event.keyCode == 13) document.getElementById('btnShow').click()">
+    <div class="container-fluid" id="content">
+      <h2>Leaderboard Tree</h2>
+      Contributor's Email: <input type = "text" id = "inputid" onkeydown="if (event.keyCode === 13) document.getElementById('btnShow').click()">
       <input type="button" class="btn btn-default" onclick="loadJSONDoc()" id="btnShow" value="show">
-      <div id="body" style="float:left;width:70%;">
+      <div id="msg">
+      </div>
+      <div id="body-left" style="float:left;width:70%;">
       </div>
       <div id="body-right" style="float:right;width:30%;">
       </div>
-      <hr>
       <div style="clear:both;">
         <hr>
         <footer>
           <p>&copy; Twitter 2014</p>
         </footer>
       </div>
-    </div>
+    </div><!--/.fluid-container-->
 
-    <script type="text/javascript">
-    // this script should be put at the end to wait input text 
-      var m = [20, 120, 20, 120],
-          w = 1280 - m[1] - m[3],
-          h = 500 - m[0] - m[2],
-          i = 0;
-      var root = new Object();
 
-      var tree = d3.layout.tree()
-          .size([h, w]);
-
-      var diagonal = d3.svg.diagonal()
-          .projection(function(d) { return [d.y, d.x]; });
-
-      var vis = d3.select("#body").append("svg:svg")
-          .attr("width", w + m[1] + m[3])
-          .attr("height", h + m[0] + m[2])
-        .append("svg:g")
-          .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
-
-      function loadJSONDoc() {
-        var putContr = "";
-        var contr = "";
-        var input = document.getElementById("inputid");
-        if(input) {
-          contr = input.value;
-        }
-        if(contr != "") {
-          window.location.href = window.location.pathname + "#" + contr;
-        }
-        var putContr = window.location.hash.substring(1);
-
-        var xmlhttp=new XMLHttpRequest();
-        xmlhttp.onload=function() {
-          var txt = xmlhttp.responseText;
-          var obj = JSON.parse(txt);
-          populate(obj, putContr);
-        }
-        // var url = build + "artifact/scripts/mobile-test-reporting/artifacts/testsuites.json";
-        var url = "json/android/testsuites.json";
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
-      }
-
-      function populate(testResults, contr) {
-        //create an array to save each contributor with his/her
-        //testCase and testSuite
-        //arr[i].contr, arr[i].testCases, arr[i].testSuites
-        var arr = new Array();
-        arr = populateResults(testResults);
-
-        // create new data structure
-        if(contr) {
-          var indx = createRoot(arr, contr, root);
-
-          // show the tree on the left
-          update(root);
-
-          // show a table on the right
-          showInfo(arr, indx);
-        }
-      }
-
-      function update(source) {
-        var duration = d3.event && d3.event.altKey ? 5000 : 500;
-
-        // Compute the new tree layout.
-        var nodes = tree.nodes(root).reverse();
-
-        // Normalize for fixed-depth.
-        nodes.forEach(function(d) { d.y = d.depth * 180; });
-
-        // Update the nodes…
-        var node = vis.selectAll("g.node")
-            .data(nodes, function(d) { return d.id || (d.id = ++i); });
-
-        // Enter any new nodes at the parent's previous position.
-        var nodeEnter = node.enter().append("svg:g")
-            .attr("class", "node")
-            .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-            .on("click", function(d) { toggle(d); update(d); });
-
-        nodeEnter.append("svg:circle")
-            .attr("r", 1e-6)
-            .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-
-        nodeEnter.append("svg:text")
-            .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
-            .attr("dy", ".35em")
-            .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-            .text(function(d) { return d.name; })
-            .style("fill-opacity", 1e-6);
-
-        // Transition nodes to their new position.
-        var nodeUpdate = node.transition()
-            .duration(duration)
-            .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
-
-        nodeUpdate.select("circle")
-            .attr("r", 4.5)
-            .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-
-        nodeUpdate.select("text")
-            .style("fill-opacity", 1);
-
-        // Transition exiting nodes to the parent's new position.
-        var nodeExit = node.exit().transition()
-            .duration(duration)
-            .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
-            .remove();
-
-        nodeExit.select("circle")
-            .attr("r", 1e-6);
-
-        nodeExit.select("text")
-            .style("fill-opacity", 1e-6);
-
-        // Update the links…
-        var link = vis.selectAll("path.link")
-            .data(tree.links(nodes), function(d) { return d.target.id; });
-
-        // Enter any new links at the parent's previous position.
-        link.enter().insert("svg:path", "g")
-            .attr("class", "link")
-            .attr("d", function(d) {
-              var o = {x: source.x0, y: source.y0};
-              return diagonal({source: o, target: o});
-            })
-          .transition()
-            .duration(duration)
-            .attr("d", diagonal);
-
-        // Transition links to their new position.
-        link.transition()
-            .duration(duration)
-            .attr("d", diagonal);
-
-        // Transition exiting nodes to the parent's new position.
-        link.exit().transition()
-            .duration(duration)
-            .attr("d", function(d) {
-              var o = {x: source.x, y: source.y};
-              return diagonal({source: o, target: o});
-            })
-            .remove();
-
-        // Stash the old positions for transition.
-        nodes.forEach(function(d) {
-          d.x0 = d.x;
-          d.y0 = d.y;
-        });
-      }
-
-      function showInfo(arr, indx) {
-        var str = "<table class='table table-bordered'>";
-        str = str + ("<tr><td>contributor</td><td>" + arr[indx].contr + "</td><tr>");
-        str = str + ("<tr><td>test suite#</td><td>" + arr[indx].testSuiteCount + "</td><tr>");
-        str = str + ("<tr><td>test case#</td><td>" + arr[indx].testCaseCount + "</td><tr></table>");
-        document.getElementById("body-right").innerHTML = str;
-      }
-
-      // show tree on load
-      addEventListener("load", function () {
-        loadJSONDoc();
-      });
-    </script>
   </body>
 </html>

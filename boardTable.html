@@ -1,14 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>mLeaderboard_table</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <!-- Le styles -->
+    <title>mLeaderboard_table</title>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/2.2.0/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
@@ -18,7 +15,6 @@
       .sidebar-nav {
         padding: 9px 0;
       }
-
       @media (max-width: 980px) {
         /* Enable use of floated navbar text */
         .navbar-text.pull-right {
@@ -30,89 +26,126 @@
     </style>
     <script src="./js/operData.js"></script>
     <script type="text/javascript">
-    // get the json url from restful api url: 
-    // https://mobile-ci.twitter.biz/view/Android%20Automation%20Dash/job/twitter-android-ui-tests/api/json?pretty=true
-    // now just demo from local: restapi.json
-    // pass the para "build" to loadJSONDoc(build)
+    // Get the latest json url from restful api url:
+    // android: https://mobile-ci.twitter.biz/view/Android/job/twitter-android-ui-tests/api/json?pretty=true
+    // ios: https://mobile-ci.twitter.biz/job/twitter-ios-master-subliminal/api/json?pretty=true
     function getLatestBuild() {
-        // Get latest build implementation here
-        var jobInfoUrl = "json/android/restapi.json";
-        var xhr;
-        if (window.XMLHttpRequest) {
-          xhr = new XMLHttpRequest();
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var jobInfo = JSON.parse(xhr.responseText);
+          var latestBuild = jobInfo.builds[0].number;
+          loadJSONDoc(latestBuild);
         }
-        else {
-          xhr = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            var jobInfo = JSON.parse(xhr.responseText);
-            var latestBuild = jobInfo.builds[0].url;
-            loadJSONDoc(latestBuild);
-          }
-        };
-        xhr.open("GET", jobInfoUrl, true);
-        xhr.send(null);
+      };
+
+      if (!location.search) {
+        var errMsg = "<h2>oops!</h2>";
+        errMsg = errMsg + "<ul class='nav nav-pills'>";
+        errMsg = errMsg + "<li id = 'ios'><a href='boardTable.html?ios'>ios</a></li>";
+        errMsg = errMsg + "<li id = 'android'><a href='boardTable.html?android'>android</a></li></ul>";
+        document.getElementById("content").innerHTML = errMsg;
+        return;
+      }
+
+      // Here is the corresponding json url
+      // var os = location.search.substring(1);
+      // var jobInfoUrl;
+      // if (os === "android") {
+      //   jobInfoUrl = "https://mobile-ci.twitter.biz/view/Android/job/twitter-android-ui-tests/api/json?pretty=true";
+      // }
+      // else {
+      //   jobInforUrl = "https://mobile-ci.twitter.biz/job/twitter-ios-master-subliminal/api/json?pretty=true";
+      // }
+      var jobInfoUrl = "json/android/restapi.json";
+
+      xhr.open("GET", jobInfoUrl, true);
+      xhr.send(null);
     }
 
     // function loadJSONDoc(build) {
     function loadJSONDoc() {
-      var xmlhttp;
-      if (window.XMLHttpRequest) {
-      // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-      }
-      else {
-      // code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
             var txt = xmlhttp.responseText;
             var obj = JSON.parse(txt);
             populate(obj);
           }
         }
-        // var url = build + "artifact/scripts/mobile-test-reporting/artifacts/testsuites.json";
-        // var url = "https://mobile-ci.twitter.biz/view/Android/job/twitter-android-ui-tests/2081/artifact/scripts/mobile-test-reporting/artifacts/testsuites.json";
-        var url = "json/android/testsuites.json";
+        if (!location.search) {
+          var errMsg = "<h2>oops!</h2>";
+          errMsg = errMsg + "<ul class='nav nav-pills'>";
+          errMsg = errMsg + "<li id = 'ios'><a href='boardTable.html?ios'>ios</a></li>";
+          errMsg = errMsg + "<li id = 'android'><a href='boardTable.html?android'>android</a></li></ul>";
+          document.getElementById("content").innerHTML = errMsg;
+          return;
+        }
+
+        var os = location.search.substring(1);
+        document.getElementById(os).className = "active";
+        document.getElementById("boardchart").href = "boardChart.html?" + os;
+        document.getElementById("boardtable").href = "boardTable.html?" + os;
+        document.getElementById("boardtree").href = "boardTree.html?" + os;
+
+        // Below get url depending on different os
+        // var url1;
+        // if (os === "android") {
+        //   // api: https://mobile-ci.twitter.biz/view/Android/job/twitter-android-ui-tests/api/json?pretty=true
+        //   url1 = "https://mobile-ci.twitter.biz/view/Android/job/twitter-android-ui-tests/" + build;
+        // }
+        // else {
+        //   // api: https://mobile-ci.twitter.biz/job/twitter-ios-master-subliminal/api/json?pretty=true
+        //   url1 = "https://mobile-ci.twitter.biz/job/twitter-ios-master-subliminal/" + build;
+        // }
+        // var url = url1 + "/artifact/scripts/mobile-test-reporting/artifacts/testsuites.json";
+        var url = "json/" + os + "/testsuites.json"; // To be deleted
+
+        // Provide build link
+        // var buildLink = "<p>build:<a href='" + url1 + "'>#" + build + "</p>";
+        // document.getElementById("buildInfo").innerHTML = buildLink;
+
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
       }
-          
+
+      // Get the data and construct a data structure, create a table to show
       function populate(testResults) {
-        var arr = new Array();
+        // Create an array to save each contributor with his/her testcase and testsuite
+        var arr = [];
         arr = populateResults(testResults);
-        arr = sort(arr, "testCaseCount");
-        // render the table
+        arr.sort(compare("testCaseCount"));
+        // Render the table
         var str = "<table class='table table-hover'><tr><th>rank</th><th>contributor</th><th>test case#</th><th>test suite#</th><th>more details</th></tr>";
-        for(var j=0; j<arr.length; j++) {
+        arr.forEach(
+        function(value, index) {
           str = str + "<tr>";
-          str = str + ("<td>" + j + "</td>");
-          // show the person's profile
-          var userName = "https://birdhouse.twitter.biz/people/profile/" + arr[j].contr;
+          str = str + ("<td>" + index + "</td>");
+          // Show the person's profile
+          var userName = "https://birdhouse.twitter.biz/people/profile/" + value.contr;
           String(userName);
-          str = str + ("<td><a href='"+userName.replace("@twitter.com", "/")+"'>" + arr[j].contr + "</a></td>");
-          // show the test case count
-          str = str + ("<td>" + arr[j].testCaseCount + "</td>");
-          // show the test suite count
-          str = str + ("<td>" + arr[j].testSuiteCount + "</td>");
-          str = str + ("<td><a href='boardTree.html#"+ arr[j].contr +"'>" + "##" + "</a></td>");
+          str = str + ("<td><a href='" + userName.replace("@twitter.com", "/")+"'>" + value.contr + "</a></td>");
+          // Show test case count
+          str = str + ("<td>" + value.testCaseCount + "</td>");
+          // Show test suite count
+          str = str + ("<td>" + value.testSuiteCount + "</td>");
+          // Provide the link to the details of this contributor's test cases
+          str = str + ("<td><a href='boardTree.html" + window.location.search + "#" + value.contr +"'>" + "##" + "</a></td>");
           str = str + ("</tr>");
-        }
+        });
         str = str + ("</table>");
         document.getElementById("ajaxRefresh").innerHTML = str;
       }
 
-      // show tree on load
-      addEventListener("load", function () {
+      // Show table on load
+      addEventListener("load", function() {
         loadJSONDoc();
       });
       </script>
-
   </head>
 
   <body>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -123,27 +156,26 @@
           </button>
           <a class="brand" href="./boardChart.html">mLeaderboard</a>
           <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a>
-            </p>
             <ul class="nav">
-              <li><a href="./boardChart.html">Chart</a></li>
-              <li class="active"><a href="./boardTable.html">Table</a></li>
-              <li><a href="./boardTree.html">Tree</a></li>
+              <li><a href="boardChart.html" id="boardchart">Chart</a></li>
+              <li class="active"><a href="boardTable.html" id="boardtable">Table</a></li>
+              <li><a href="boardTree.html" id="boardtree">Tree</a></li>
+            </ul>
+            <ul class="nav pull-right">
+              <li id = "ios"><a href="boardTable.html?ios">ios</a></li>
+              <li id = "android"><a href="boardTable.html?android">android</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span9">
-          <button type="button" class="btn btn-default" onclick="loadJSONDoc()">show</button>
-          <button type="button" class="btn btn-default" onclick="getLatestBuild()">test</button>
-          <div id="ajaxRefresh" class="bs-example"></div>
-        </div>
-      </div><!--/row-->
+    <div class="container-fluid" id="content">
+      <h2>Leaderboard Table</h2>
+      <div id="buildInfo">
+      </div>
+      <div id="ajaxRefresh" class="bs-example">
+      </div>
       <hr>
       <footer>
         <p>&copy; Twitter 2014</p>

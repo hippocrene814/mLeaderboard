@@ -1,0 +1,38 @@
+TODO:
+0/ write a script to transform json file to js object
+1/ show latest leaderboard table of mobile UI test contributor
+2/ show latest leaderboard bar chart of mobile UI test contributor
+3/ build tree of certain contributor to show what test suites and test cases he/she modified
+
+==========
+HOW TO RUN
+==========
+0/ download it
+1/ start python server: $ python -m SimpleHTTPServer 8000
+2/ input url in web browser: http://127.0.0.1:8000/boardChart.html
+
+=====
+ABOUT
+=====
+---------------
+boardChart.html
+---------------
+This page shows bar chart of testcase#/testsuite# of android/ios UI test contributor
+
+---------------
+boardTable.html
+---------------
+This page shows table of testcase#/testsuite# of android/ios UI test contributor
+You can see certain contributor's test cases and test suites by clicking "##" at last column of the corresponding row
+
+---------------
+boardTree.html
+---------------
+This page shows tree of certain android/ios UI test contributor
+
+======
+NOTICE
+======
+Currently, it cannot get the latest json file by fetch string in RESTFUL API because of "Access Control Origin not Allowed"
+It may work when running on twitter.biz origin
+That's why there are several lines of code in boardTree.html commented

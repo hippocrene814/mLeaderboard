@@ -1,5 +1,4 @@
 body {
-  background: url(texture-noise.png);
   overflow: hidden;
   margin: 0;
   font-size: 14px;
@@ -71,11 +70,6 @@ line {
   color: #1181B8;
 }
 
-a:link, a:visited {
-  color: #000;
-  text-decoration: none;
-}
-
 a:hover {
   color: #666;
 }
@@ -86,4 +80,22 @@ a:hover {
   width: 1280px;
   font-size: 12px;
   color: #999;
+}
+
+.node circle {
+  cursor: pointer;
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font-size: 9px;
+  font-weight:bold;
+}
+
+path.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
 }
